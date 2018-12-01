@@ -3,7 +3,7 @@ from flask import Flask, request
 import redis
 import sys
 
-api_prefix = "/logger/v1.0/"
+api_prefix = "/logger/"
 index_name = "uqcrowd-log"
 
 app = Flask(__name__)
