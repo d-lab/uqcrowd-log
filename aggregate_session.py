@@ -91,7 +91,24 @@ def post_session(uri, session):
     return results["_id"] if results["result"] == "created" else None
 
 
+def fix_index_mapping(uri):
+    query = json.dumps({
+        "properties": {
+            "session": {
+                "type": "text",
+                "fielddata": True
+            }
+        }
+    })
+    response = requests.put(uri, headers={"Content-Type": "application/json"}, data=query)
+    results = json.loads(response.text)
+    print(json.dumps(results))
+
+
 def main(date):
+
+    fix_index_mapping(base_uri + "/" + log_index_prefix + "-" + date + "/_mapping/" + log_index_prefix)
+
     sessions = get_sessions(base_uri + "/" + log_index_prefix + "-" + date + "/_search")
     for session_id in sessions:
         session = get_session(base_uri + "/" + log_index_prefix + "-" + date + "/_search", session_id)
