@@ -1,3 +1,4 @@
+import json
 import time
 import redis
 import grequests
@@ -5,15 +6,16 @@ import requests
 import threading
 from collections import deque
 from elasticsearch import Elasticsearch
-
+import datetime
 
 # url = "http://dke-uqcrowd-log.uqcloud.net/logger/v1.0/index"
 # url = 'http://localhost:5009/logger/redis'
-url = 'http://localhost:5000/logger/index'
+url = 'http://localhost/logger/index'
 
 re = redis.Redis(host='localhost', port=6379, db=0)
 es = Elasticsearch()
 index_name = "uqcrowd-log"
+date_shift = 190
 count = 0
 
 
@@ -29,8 +31,12 @@ def enqueue(q, m):
 
 def elastic(q):
     while len(q) > 0:
-        m = q.popleft()
-        es.index(index=index_name, doc_type=index_name, body=m)
+        m = json.loads(q.popleft())
+	new_date = datetime.datetime.strptime(m['timestamp'], "%Y-%m-%dT%H:%M:%S.%fZ")
+	new_date = new_date + datetime.timedelta(days=date_shift)
+	m['timestamp'] = new_date.isoformat();
+	m['server_time'] = new_date.isoformat();
+        es.index(index=index_name, doc_type=index_name, body=json.dumps(m))
         # print(len(q))
 
 
@@ -65,7 +71,7 @@ def handler(response, **kwargs):
 
 if __name__ == "__main__":
     queue = deque()
-    enqueue(queue, 10000)
+    enqueue(queue, 30000)
     concurrent = 30;
     start_time = time.time()
   
