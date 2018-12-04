@@ -38,7 +38,7 @@ def elastic(q):
         m['server_time'] = new_date.isoformat();
 
         index_name = index_prefix + "-" + new_date.strftime('%Y-%m-%d')
-        es.index(index=index_name, doc_type=index_name, body=json.dumps(m))
+        es.index(index=index_name, doc_type=index_prefix, body=json.dumps(m))
         print(len(q))
 
 

@@ -21,7 +21,7 @@ def insert():
 @app.route(api_prefix + "index", methods=['POST'])
 def index():
     index_name = index_prefix + "-" + datetime.now().strftime('%Y-%m-%d')
-    es.index(index=index_name, doc_type=index_name, body=request.data)
+    es.index(index=index_name, doc_type=index_prefix, body=request.data)
     return "True"
 
 
