@@ -10,11 +10,11 @@ import datetime
 
 # url = "http://dke-uqcrowd-log.uqcloud.net/logger/v1.0/index"
 # url = 'http://localhost:5009/logger/redis'
-url = 'http://localhost/logger/index'
+url = 'http://localhost:5000/logger/index'
 
 re = redis.Redis(host='localhost', port=6379, db=0)
 es = Elasticsearch()
-index_name = "uqcrowd-log"
+index_prefix = "uqcrowd-log"
 date_shift = 190
 count = 0
 
@@ -32,26 +32,28 @@ def enqueue(q, m):
 def elastic(q):
     while len(q) > 0:
         m = json.loads(q.popleft())
-	new_date = datetime.datetime.strptime(m['timestamp'], "%Y-%m-%dT%H:%M:%S.%fZ")
-	new_date = new_date + datetime.timedelta(days=date_shift)
-	m['timestamp'] = new_date.isoformat();
-	m['server_time'] = new_date.isoformat();
+        new_date = datetime.datetime.strptime(m['timestamp'], "%Y-%m-%dT%H:%M:%S.%fZ")
+        new_date = new_date + datetime.timedelta(days=date_shift)
+        m['timestamp'] = new_date.isoformat();
+        m['server_time'] = new_date.isoformat();
+
+        index_name = index_prefix + "-" + new_date.strftime('%Y-%m-%d')
         es.index(index=index_name, doc_type=index_name, body=json.dumps(m))
-        # print(len(q))
+        print(len(q))
 
 
 def redis(q):
     while len(q) > 0:
         m = q.popleft()
-        re.rpush(index_name, m)
-        # print(len(q))
+        re.rpush(index_prefix, m)
+        print(len(q))
 
 
 def post(q):
     while len(q) > 0:
         m = q.popleft()
         requests.post(url, data=m)
-        # print(len(q))
+        print(len(q))
 
 
 def async_post(q):
@@ -72,7 +74,7 @@ def handler(response, **kwargs):
 if __name__ == "__main__":
     queue = deque()
     enqueue(queue, 30000)
-    concurrent = 30;
+    concurrent = 1;
     start_time = time.time()
   
     threads = []
