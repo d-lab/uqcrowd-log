@@ -8,7 +8,7 @@ base_uri = "http://localhost:9200"
 
 
 def get_sessions(uri):
-    query = json.dumps({
+    query = {
         "size": 0,
         "aggs": {
             "session": {
@@ -18,8 +18,8 @@ def get_sessions(uri):
                 }
             }
         }
-    })
-    response = requests.get(uri, headers={"Content-Type": "application/json"}, data=query)
+    }
+    response = requests.get(uri, headers={"Content-Type": "application/json"}, data=json.dumps(query))
     results = json.loads(response.text)
     if "error" in results:
         print(json.dumps(results, indent=4))
@@ -29,7 +29,7 @@ def get_sessions(uri):
 
 
 def get_session(uri, session_id):
-    query = json.dumps({
+    query = {
         "query": {
             "match": {
                 "session": session_id
@@ -65,9 +65,9 @@ def get_session(uri, session_id):
                 }
             }
         }
-    })
+    }
 
-    response = requests.get(uri, headers={"Content-Type": "application/json"}, data=query)
+    response = requests.get(uri, headers={"Content-Type": "application/json"}, data=json.dumps(query))
     results = json.loads(response.text)
 
     if results["hits"]["total"] > 0:
@@ -92,15 +92,15 @@ def post_session(uri, session):
 
 
 def fix_index_mapping(uri):
-    query = json.dumps({
+    query = {
         "properties": {
             "session": {
                 "type": "text",
                 "fielddata": True
             }
         }
-    })
-    response = requests.put(uri, headers={"Content-Type": "application/json"}, data=query)
+    }
+    response = requests.put(uri, headers={"Content-Type": "application/json"}, data=json.dumps(query))
     results = json.loads(response.text)
     print(json.dumps(results))
 
