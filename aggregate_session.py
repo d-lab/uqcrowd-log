@@ -8,6 +8,11 @@ base_uri = "http://localhost:9200"
 
 
 def get_sessions(uri):
+    """Get all unique Session ID from the log index.
+
+    Parameters:
+        uri (string): The uri of ES search API including the index name
+    """
     query = {
         "size": 0,
         "aggs": {
@@ -29,6 +34,14 @@ def get_sessions(uri):
 
 
 def get_session(uri, session_id):
+    """(object) Get all the user actions, client log messages of a session. All the data is aggregated
+    as the predefined query.
+
+    Parameters:
+        uri (string): The uri of ES search API including the index name
+        session_id (string): the Session ID to search
+
+    """
     query = {
         "query": {
             "match": {
@@ -85,19 +98,38 @@ def get_session(uri, session_id):
         return None
 
 
-def post_session(uri, session):
+def add_session(uri, session):
+    """(string) Insert a session into the ES index,
+    return the doc_id of the record if successful, return None otherwise
+
+    Parameters:
+        uri (string): The uri of ES indexing API including the index name and doc type
+        session (object): the session need to be indexed
+
+    """
     response = requests.post(uri, headers={"Content-Type": "application/json"}, data=json.dumps(session))
     results = json.loads(response.text)
     return results["_id"] if results.get("result") == "created" else None
 
 
 def delete_index(uri):
+    """(bool) Delete an index on ES, use to clean up previous results
+
+    Parameters:
+        uri (string): The uri of ES deleting index API including the index name
+    """
     response = requests.delete(uri, headers={"Content-Type": "application/json"})
     results = json.loads(response.text)
     return results.get("acknowledged")
 
 
 def update_mapping(uri):
+    """(bool) Update the mapping of an uqcrowd-log index, set the fielddata parameter of "Session" field to True
+    Todo: this is sort of a hardcoded workaround method to address the invalid data type issue
+
+    Parameters:
+        uri (string): The uri of ES deleting index API including the index name
+    """
     query = {
         "properties": {
             "session": {
@@ -112,16 +144,19 @@ def update_mapping(uri):
 
 
 def main(date):
+    """(bool) Aggregate multiple messages of a session into a single record and index it to ES
 
+    Parameters:
+        date (string): the log date need to be aggregate (%y-%m-%d)
+    """
     print("Update Mapping:", update_mapping(base_uri + "/" + log_index_prefix + "-" + date + "/_mapping/" + log_index_prefix))
-
     print("Delete Old Index:", date, delete_index(base_uri + "/" + session_index_prefix + "-" + date))
 
     sessions = get_sessions(base_uri + "/" + log_index_prefix + "-" + date + "/_search")
     for session_id in sessions:
         session = get_session(base_uri + "/" + log_index_prefix + "-" + date + "/_search", session_id)
         if session is not None:
-            doc_id = post_session(base_uri + "/" + session_index_prefix + "-" + date + "/session", session)
+            doc_id = add_session(base_uri + "/" + session_index_prefix + "-" + date + "/session", session)
             print(session_id, doc_id)
 
 
