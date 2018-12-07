@@ -88,10 +88,16 @@ def get_session(uri, session_id):
 def post_session(uri, session):
     response = requests.post(uri, headers={"Content-Type": "application/json"}, data=json.dumps(session))
     results = json.loads(response.text)
-    return results["_id"] if results["result"] == "created" else None
+    return results["_id"] if results.get("result") == "created" else None
 
 
-def fix_index_mapping(uri):
+def delete_index(uri):
+    response = requests.delete(uri, headers={"Content-Type": "application/json"})
+    results = json.loads(response.text)
+    return results.get("acknowledged")
+
+
+def update_mapping(uri):
     query = {
         "properties": {
             "session": {
@@ -102,12 +108,14 @@ def fix_index_mapping(uri):
     }
     response = requests.put(uri, headers={"Content-Type": "application/json"}, data=json.dumps(query))
     results = json.loads(response.text)
-    print(json.dumps(results))
+    return results.get("acknowledged")
 
 
 def main(date):
 
-    fix_index_mapping(base_uri + "/" + log_index_prefix + "-" + date + "/_mapping/" + log_index_prefix)
+    print("Update Mapping:", update_mapping(base_uri + "/" + log_index_prefix + "-" + date + "/_mapping/" + log_index_prefix))
+
+    print("Delete Old Index:", date, delete_index(base_uri + "/" + session_index_prefix + "-" + date))
 
     sessions = get_sessions(base_uri + "/" + log_index_prefix + "-" + date + "/_search")
     for session_id in sessions:
