@@ -51,14 +51,14 @@ or
 
 
 #### 2. mouse_event: 
-Compulsory: **action**, the value must be one of **left-click, right-click, double-click, select**
+Compulsory: **mouse_event**, the value must be one of **left-click, right-click, double-click, select**
 Optional: **details**
 
 An example of a left-click action message
 
     "type": "mouse_event",
     "content": {
-        "action": "left-click",
+        "mouse_event": "left-click",
         "details": {
             "x": 100,
             "y": 400
@@ -69,7 +69,7 @@ or double-click
 
     "type": "mouse_event",
     "content": {
-        "action": "double-click",
+        "mouse_event": "double-click",
         "details": {
             "from_x": 100,
             "from_y": 400,
@@ -82,7 +82,7 @@ or selection
 
     "type": "mouse_event",
     "content": {
-        "action": "select",
+        "mouse_event": "select",
         "details": {
             "from_x": 100,
             "from_y": 400,
@@ -92,12 +92,12 @@ or selection
     }
     
 #### 3. keyboard_event
-Compulsory: **action**, the value must be one of **edit-text, key-pressed, multiple-keys-pressed**
+Compulsory: **keyboard_event**, the value must be one of **edit-text, key-pressed, multiple-keys-pressed**
 Optional: **details**
 
     "type": "keyboard_event",
     "content": {
-        "action": "edit-text",
+        "keyboard_event": "edit-text",
         "details": {
             "before": "text before editing",
             "after": "the edited text"
@@ -108,7 +108,7 @@ or
 
     "type": "keyboard_event",
     "content": {
-        "action": "key-pressed",
+        "keyboard_event": "key-pressed",
         "details": {
             "key": 30,
             "duration": 10,
@@ -118,12 +118,12 @@ or
 
 
 #### 4. browser_event
-Compulsory: **action**, the value must be one of **change-tab, clipboard, scroll**
+Compulsory: **browser_event**, the value must be one of **change-tab, clipboard, scroll**
 Optional: **details**
     
     "type": "browser_event",
     "content": {
-        "action": "change-tab",
+        "browser_event": "change-tab",
         "details": {
             "url_before": "this is the url of the previous tab"
             "url_after": "this is the url of the current tab"
@@ -134,7 +134,7 @@ or
 
     "type": "browser_event",
     "content": {
-        "action": "clipboard",
+        "browser_event": "clipboard",
         "details": {
             "type": "paste",
             "value": "the content goes here"
@@ -142,12 +142,12 @@ or
     }
 	
 #### 5. html_element
-Compulsory: **action**, the value must be one of **focus, click, hover, drag**
+Compulsory: **html_event**, the value must be one of **focus, click, hover, drag**
 Optional: **details**
 
     "type": "html_event",
     "content": {
-        "action": "focus",
+        "html_event": "focus",
         "details": {
             "element_tag": "section",
             "element_id": "product_detail"
@@ -159,7 +159,7 @@ or
 
 	"type": "html_event",
     "content": {
-        "action": "click",
+        "html_event": "click",
         "details": {
             "element_tag": "input",
             "element_id": "product_detail"
