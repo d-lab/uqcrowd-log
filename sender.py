@@ -7,8 +7,8 @@ from collections import deque
 from elasticsearch import Elasticsearch
 from datetime import datetime
 
-# logger_uri = "http://dke-uqcrowd-log.uqcloud.net/logger/v1.0/index"
-logger_uri = 'http://localhost:5000/logger/index'
+# logger_uri = "http://dke-uqcrowd-log.uqcloud.net/logger/insert"
+logger_uri = 'http://localhost:5000/logger/insert'
 
 re = redis.Redis(host='localhost', port=6379, db=0)
 es = Elasticsearch()
