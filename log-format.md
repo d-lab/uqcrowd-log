@@ -142,10 +142,10 @@ or
     }
 	
 #### 5. html_element
-Compulsory: **html_event**, the value must be one of **focus, click, hover, drag**
+Compulsory: **html_event**, the value must be one of **focus, click, hover, drag, change_value**
 Optional: **details**
 
-    "type": "html_event",
+    "type": "html_event",e
     "content": {
         "html_event": "focus",
         "details": {
