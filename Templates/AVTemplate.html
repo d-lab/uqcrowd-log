@@ -1,13 +1,14 @@
+<!-- Bootstrap v3.0.3 --><!-- AV template V0.00 -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script>
 	logger_uri = "https://dke-uqcrowd-log.uqcloud.net/logger/insert"
 	session_id = Math.random().toString(36).substr(2, 12);
-	worker_id = 123456,
-	unit_id = 34567,
-	job_id = "Test",
+	worker_id = "WK2312FJ",
+	unit_id = "MT1234-56789",
+	job_id = "MT1234",
 
 	sequence = 0
-	count = 0
+	message_count = 0
 
 	function send_log(log_type, subject, detail) {
 
@@ -34,7 +35,7 @@
 			data: JSON.stringify(data),
 			contentType: "text/plain",
 			success: function(result) {
-				count++
+				message_count++
 			}
 		})
 
@@ -58,18 +59,20 @@
 		$("*").on("click", function(event) {
 			event.stopPropagation();
 			send_log("mouse_event", "click", {
-				name: $(this).attr("name"),
-				id: $(this).id,
-				m: $(event.target).attr("name"),
-				x: event.pageX,
-				y: event.pageY
+				element_tag: $(this).prop("tagName").toLowerCase(),
+				element_name: $(this).attr("name"),
+				element_id: $(this).id,
+				event_x: event.pageX,
+				event_y: event.pageY
 			});
 		});
 
 		// Track Select Value Changes (Questions)
 		$("select").on("change", function() {
 			send_log("html_event", "change_value", {
-				name: $(this).attr("name"),
+				element_tag: $(this).prop("tagName").toLowerCase(),
+				element_name: $(this).attr("name"),
+				element_id: $(this).id,
 				value: $(this).children("option:selected").val()
 			});
 		});
@@ -92,7 +95,8 @@
 		// End Session
 		$(window).on('beforeunload', function(){
 			send_log("message", "End Session", {
-				session_id: session_id
+				session_id: session_id,
+				message_count: message_count
 			});
 		});
 
@@ -100,7 +104,7 @@
 	});
 
 </script>
-<!-- Bootstrap v3.0.3 --><!-- AV template V0.00 -->
+
 <link href="https://s3.amazonaws.com/mturk-public/bs30/css/bootstrap.min.css" rel="stylesheet" />
 <section class="container" id="Other" style="margin-bottom:15px; padding: 10px 10px; font-family: Verdana, Geneva, sans-serif; color:#333333; font-size:0.9em;">
 <div class="row col-xs-12 col-md-12"><!-- Instructions -->
