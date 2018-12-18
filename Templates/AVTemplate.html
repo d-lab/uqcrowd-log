@@ -1,0 +1,92 @@
+<!-- Bootstrap v3.0.3 --><!-- AV template V0.00 -->
+<link href="https://s3.amazonaws.com/mturk-public/bs30/css/bootstrap.min.css" rel="stylesheet" />
+<section class="container" id="Other" style="margin-bottom:15px; padding: 10px 10px; font-family: Verdana, Geneva, sans-serif; color:#333333; font-size:0.9em;">
+<div class="row col-xs-12 col-md-12"><!-- Instructions -->
+<div class="panel panel-primary">
+<div class="panel-heading"><strong>Instructions</strong></div>
+
+<div class="panel-body">
+<p>To complete the HIT, you must complete each question in the table at the bottom of this page. Note that we do not require you to understand the meaning of the medical terms, just the meaning of the english sentences, as they are written. To answer a question:</p>
+
+<ul>
+	<li>Identify both the entity and the disorder from the question in the medical text - they are highlighted and identified by a superscript letter (A,B,C...)</li>
+	<li>Your task is to confirm whether the entity is related to the disorder. You answer by selecting from the following based on the meaning of the sentences:
+	<ul>
+		<li>true: The entity does refer to that disorder (or the same disorder in another sentence)</li>
+		<li>false: The entity is not referring to that disorder (or the same disorder in another sentence)</li>
+		<li>not clear from the text: You cannot ascertain from the sentences whether the entity is referring to the disorder (Should be used rarely)</li>
+		<li>confusing entity: If the entity doesn&#39;t seem to make any sense, for example a symptom called [central] makes no sense and cannot be assigned to a disorder</li>
+		<li>confusing disorder: If the disorder doesn&#39;t make any sense, for example a disorder called [central] makes no sense for an entity to be referring to it</li>
+	</ul>
+	</li>
+</ul>
+</div>
+</div>
+<!-- End Instructions -->
+
+<div class="row col-xs-12 col-md-12"><!-- Source Text -->
+<div class="panel panel-info">
+<div class="panel-heading"><strong>Medical Text</strong> - refer to this for the questions below</div>
+
+<div class="panel-body">
+<h3>${title_text}</h3>
+&nbsp;
+
+<p>${abstract_text}</p>
+</div>
+</div>
+<!-- End of medical text --><!-- Content Body -->
+
+<div class="row col-xs-12 col-md-12"><!-- Source Text -->
+<div class="panel panel-success">
+<div class="panel-heading"><strong>Your questions</strong> - about the medical text</div>
+
+<div class="panel-body">
+<table class="table table-striped">
+	<tbody>
+		<tr>
+			<td><b>Is this [Entity] (<mark>highlighted</mark>)</b></td>
+			<td><b>referring to the [Disorder] (<mark>highlighted</mark>)?</b></td>
+			<td><b>Your answer</b></td>
+		</tr>
+		<tr>
+			<td>${q1_entity} <input id="qid1" name="qid1" type="hidden" value="${q1_id}" /></td>
+			<td>${q1_disorder}</td>
+			<td><select name="q1"><option value="not_done"></option><option value="bogus_answer">true and false</option><option value="true">true</option><option value="false">false</option><option value="not_clear">not clear from the text</option><option value="bad_entity">confusing entity</option><option value="bad_distorder">confusing disorder</option> </select></td>
+		</tr>
+		<tr>
+			<td>${q2_entity} <input id="qid2" name="qid2" type="hidden" value="${q2_id}" /></td>
+			<td>${q2_disorder}</td>
+			<td><select name="q2"><option value="not_done"></option><option value="bogus_answer">true and false</option><option value="true">true</option><option value="false">false</option><option value="not_clear">not clear from the text</option><option value="bad_entity">confusing entity</option><option value="bad_distorder">confusing disorder</option> </select></td>
+		</tr>
+		<tr>
+			<td>${q3_entity} <input id="qid3" name="qid3" type="hidden" value="${q3_id}" /></td>
+			<td>${q3_disorder}</td>
+			<td><select name="q3"><option value="not_done"></option><option value="bogus_answer">true and false</option><option value="true">true</option><option value="false">false</option><option value="not_clear">not clear from the text</option><option value="bad_entity">confusing entity</option><option value="bad_distorder">confusing disorder</option> </select></td>
+		</tr>
+		<tr>
+			<td>${q4_entity} <input id="qid4" name="qid4" type="hidden" value="${q4_id}" /></td>
+			<td>${q4_disorder}</td>
+			<td><select name="q4"><option value="not_done"></option><option value="bogus_answer">true and false</option><option value="true">true</option><option value="false">false</option><option value="not_clear">not clear from the text</option><option value="bad_entity">confusing entity</option><option value="bad_distorder">confusing disorder</option> </select></td>
+		</tr>
+		<tr>
+			<td>${q5_entity} <input id="qid5" name="qid5" type="hidden" value="${q5_id}" /></td>
+			<td>${q5_disorder}</td>
+			<td><select name="q5"><option value="not_done"></option><option value="bogus_answer">true and false</option><option value="true">true</option><option value="false">false</option><option value="not_clear">not clear from the text</option><option value="bad_entity">confusing entity</option><option value="bad_distorder">confusing disorder</option> </select></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+</div>
+<!-- End of medical text --><!-- Content Body -->
+
+<section>
+<div>&nbsp;</div>
+</section>
+<!-- close container -->
+<style type="text/css">fieldset { padding: 10px; background:#fbfbfb; border-radius:5px; margin-bottom:5px; }
+</style>
+</div>
+</div>
+</div>
+</section>
