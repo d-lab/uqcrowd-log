@@ -1,15 +1,36 @@
 <!-- Bootstrap v3.0.3 --><!-- AV template V0.00 -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script>
-	logger_uri = "https://dke-uqcrowd-log.uqcloud.net/logger/insert"
+
+	// Please set your JobID and UnitID
+	unit_id = "MT1234-56789";
+	job_id = "MT1234";
+
+	// Split URL and Query
+	hit_url = document.URL.split('?')[0];
+	query = document.URL.split('?')[1];
+
+	// Parse the parameters from Query
+	params = [];
+	if (query != undefined) {
+		entries = query.split('&');
+		for (var i = 0; i < entries.length; i++){
+			var entry = entries[i].split('=');
+			params.push(entry[1]);
+			params[entry[0]] = entry[1];
+		}
+	}
+
+	// Generate random Session ID
 	session_id = Math.random().toString(36).substr(2, 12);
-	worker_id = "WK2312FJ",
-	unit_id = "MT1234-56789",
-	job_id = "MT1234",
+
+	// Get the Worker ID from URI query
+	worker_id = params["workerId"];
 
 	sequence = 0
 	message_count = 0
 
+	// Send log message to server
 	function send_log(log_type, subject, detail) {
 
 		content = {}
@@ -30,7 +51,7 @@
 		sequence++
 
 		$.ajax({
-			url: logger_uri,
+			url: "https://dke-uqcrowd-log.uqcloud.net/logger/insert",
 			type: "POST",
 			data: JSON.stringify(data),
 			contentType: "text/plain",
@@ -46,7 +67,9 @@
 
 		// Start Session
 		send_log("message", "Start Session", {
-			session_id: session_id
+			hit_url: hit_url,
+			assignment_id: params["assignmentId"],
+			hit_id: params["hitId"]
 		});
 
 		// Check Screen Size
@@ -57,7 +80,6 @@
 
 		// Track Mouse Event
 		$("*").on("click", function(event) {
-			event.stopPropagation();
 			send_log("mouse_event", "click", {
 				element_tag: $(this).prop("tagName").toLowerCase(),
 				element_name: $(this).attr("name"),
@@ -65,6 +87,7 @@
 				event_x: event.pageX,
 				event_y: event.pageY
 			});
+			event.stopPropagation();
 		});
 
 		// Track Select Value Changes (Questions)
