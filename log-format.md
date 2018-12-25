@@ -2,27 +2,37 @@
 
 This document is to describe the log format of UQCrowd Logging system
 
-The base log message will have the following compulsory field: **log_type, sequence_number, browser_time, session_id, worker_id, unit_id, job_id, content**
+The base log message will have the following compulsory field: **log_type**, **sequence_number**, **browser_time**, **session_id**, **worker_id**, **hit_id**, **assessment_id**, **job_id**, **content**
 
 The structure of the **content** field may be different according to the log_type,
 this field provides the flexibility for defining the message structures, 
-Moreover, inside each **content** object, there is an *optional* object named **details** which gives the ability to extent the data in the future
+Moreover, inside each **content** object, there is an **optional** object named **details** which gives the ability to extent the data in the future
  
+The session_id is generated randomly using javascript:
+
+    <script>
+        // Generate random Session ID
+        session_id = Math.random().toString(36).substr(2, 12);
+	</script>
+ 
+Sample log message:
+
     {
         "log_type": "message",
         "sequence_number": 1,
         "browser_time": "2018-09-16T23:40:28+00:00",
-        "session_id": "VCEYEXNZ",
-        "worker_id": 123456,
-        "unit_id": 34567,
-        "job_id": 234567,
+        "session_id": "ojkjj8pvav",
+        "worker_id": <Worker_ID from Mturk,
+        "hit_id": <Hit_ID from MTurk>,
+        "assessment_id": <Assessment_ID from Mturk>,
+        "job_id": "TEST1234",
         "content": {
             "message": "Start Session"
         }
     }
 
 
-### Content structure for each log_type:
+### Content structure for each log\_type:
 
 #### 1. message
 Compulsory: **message**, Optional: **details**
@@ -51,14 +61,14 @@ or
 
 
 #### 2. mouse_event: 
-Compulsory: **mouse_event**, the value must be one of **left-click, right-click, double-click, select**
+Compulsory: **mouse_event**, the value must be one of **left_click, right_click, double_click, select**
 Optional: **details**
 
 An example of a left-click action message
 
     "type": "mouse_event",
     "content": {
-        "mouse_event": "left-click",
+        "mouse_event": "left_click",
         "details": {
             "x": 100,
             "y": 400
@@ -69,7 +79,7 @@ or double-click
 
     "type": "mouse_event",
     "content": {
-        "mouse_event": "double-click",
+        "mouse_event": "double_click",
         "details": {
             "from_x": 100,
             "from_y": 400,
@@ -92,12 +102,12 @@ or selection
     }
     
 #### 3. keyboard_event
-Compulsory: **keyboard_event**, the value must be one of **edit-text, key-pressed, multiple-keys-pressed**
+Compulsory: **keyboard_event**, the value must be one of **edit_text, key_pressed, multiple_keys_pressed**
 Optional: **details**
 
     "type": "keyboard_event",
     "content": {
-        "keyboard_event": "edit-text",
+        "keyboard_event": "edit_text",
         "details": {
             "before": "text before editing",
             "after": "the edited text"
@@ -108,7 +118,7 @@ or
 
     "type": "keyboard_event",
     "content": {
-        "keyboard_event": "key-pressed",
+        "keyboard_event": "key_pressed",
         "details": {
             "key": 30,
             "duration": 10,
@@ -118,12 +128,12 @@ or
 
 
 #### 4. browser_event
-Compulsory: **browser_event**, the value must be one of **change-tab, clipboard, scroll**
+Compulsory: **browser_event**, the value must be one of **change_tab, clipboard, scroll**
 Optional: **details**
     
     "type": "browser_event",
     "content": {
-        "browser_event": "change-tab",
+        "browser_event": "change_tab",
         "details": {
             "url_before": "this is the url of the previous tab"
             "url_after": "this is the url of the current tab"

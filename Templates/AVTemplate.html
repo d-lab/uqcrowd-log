@@ -2,8 +2,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script>
 
-	// Please set your JobID and UnitID
-	unit_id = "MT1234-56789";
+	// Please set your JobID
 	job_id = "MT1234";
 
 	// Split URL and Query
@@ -25,6 +24,8 @@
 
 	// Get the Worker ID from URI query
 	worker_id = params["workerId"];
+	assignment_id = params["assignmentId"];
+	hit_id = params["hitId"];
 
 	sequence = 0
 	message_count = 0
@@ -42,7 +43,8 @@
 			browser_time: new Date(),
 			session_id: session_id,
 			worker_id: worker_id,
-			unit_id: unit_id,
+			assignment_id: assignment_id,
+			hit_id: hit_id,
 			job_id: job_id,
 			content: content
 		}
@@ -67,8 +69,7 @@
 		// Start Session
 		send_log("message", "Start Session", {
 			hit_url: hit_url,
-			assignment_id: params["assignmentId"],
-			hit_id: params["hitId"]
+			hit_query: query
 		});
 
 		// Check Screen Size
