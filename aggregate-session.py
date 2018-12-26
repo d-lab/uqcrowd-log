@@ -33,6 +33,29 @@ def get_sessions(uri):
         return [bucket["key"] for bucket in results["aggregations"]["session_id"]["buckets"]]
 
 
+def get_session_info(uri, session_id):
+    query = {
+        "size": 1,
+        "query": {
+            "match": {
+                "session_id": session_id
+            }
+        }
+    }
+    response = requests.get(uri, headers={"Content-Type": "application/json"}, data=json.dumps(query))
+    results = json.loads(response.text)
+    if "error" in results:
+        print(json.dumps(results, indent=4))
+        return None
+    else:
+        result = results["hits"]["hits"][0]["_source"]
+        return {
+            "worker_id": result["worker_id"],
+            "hit_id": result["hit_id"],
+            "assignment_id": result["assignment_id"],
+        }
+
+
 def get_session(uri, session_id):
     """(object) Get all the user actions, client log messages of a session. All the data is aggregated
     as the predefined query.
@@ -68,17 +91,15 @@ def get_session(uri, session_id):
     response = requests.get(uri, headers={"Content-Type": "application/json"}, data=json.dumps(query))
     results = json.loads(response.text)
 
-    # Todo:
-    # session_info = get_session_info()
+    session_info = get_session_info(uri, session_id)
 
     if results.get("hits"):
         return {
             "session_id": session_id,
             "message_count": results["hits"]["total"],
-            # Todo:
-            # "worker_id": session_info["worker_id"],
-            # "hit_id": session_info["hit_id"],
-            # "assignment_id": session_info["assignment_id"],
+            "worker_id": session_info["worker_id"],
+            "hit_id": session_info["hit_id"],
+            "assignment_id": session_info["assignment_id"],
             "start_time": results["aggregations"]["start_time"]["value_as_string"],
             "end_time": results["aggregations"]["end_time"]["value_as_string"],
             "duration": results["aggregations"]["end_time"]["value"] - results["aggregations"]["start_time"]["value"],
@@ -128,7 +149,7 @@ def main(date):
         session = get_session(base_uri + "/" + log_index_prefix + "-" + date + "/_search", session_id)
         if session is not None:
             doc_id = add_session(base_uri + "/" + session_index_prefix + "-" + date + "/session", session)
-            print(session_id, doc_id)
+            print(date, session_id, doc_id)
 
 
 if __name__ == '__main__':

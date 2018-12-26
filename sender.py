@@ -40,8 +40,7 @@ def load_messages_from_file(file_path, queue, max_count):
                 "session_id": hashlib.md5(data["session"].encode('utf-8')).hexdigest()[:11],
                 "worker_id": hashlib.md5(str(data["worker_id"]).encode('utf-8')).hexdigest().upper()[:14],
                 "hit_id": hashlib.md5(str(data["task_id"]).encode('utf-8')).hexdigest().upper(),
-                "assessment_id": hashlib.md5(str(data["unit_id"]).encode('utf-8')).hexdigest().upper(),
-                "job_id": "TEST1234",
+                "assignment_id": hashlib.md5(str(data["unit_id"]).encode('utf-8')).hexdigest().upper(),
                 "content": data["message"]
             }
             queue.append(json.dumps(message))
