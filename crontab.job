@@ -1,0 +1,11 @@
+# aggregate sessions every day
+05 0    * * *   root    python /opt/uqcrowd-log/aggregate-session.py $(date '+%F'  --date='1 days ago')
+
+# start the logger every hour
+30 *    * * *   root    /opt/uqcrowd-log/logger-start.sh
+
+# check the elasticsearch service every 5 mins
+*/5 *   * * *   root    lsof -Pni | grep LISTEN | grep 9200 || echo [WARNING] Elasticsearch Problem! | python /opt/tools/send-slack-message.py
+
+# check the logger service every 5 mins
+*/5 *   * * *   root    curl http://localhost:443/logger/insert -I -s | grep "METHOD NOT ALLOWED" || echo [WARNING] Service Problem! | python /opt/tools/send-slack-message.py
