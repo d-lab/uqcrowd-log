@@ -3,6 +3,7 @@ from flask import Flask, request
 from datetime import datetime
 import redis
 import sys
+import json
 
 api_prefix = "/logger"
 index_prefix = "uqcrowd-log"
@@ -27,7 +28,13 @@ def index():
         # Else send directly to the elasticsearch
         # The messages are indexed to indexes separated by date stamp
         index_name = index_prefix + "-" + datetime.now().strftime('%Y-%m-%d')
-        es.index(index=index_name, doc_type=index_prefix, body=request.data)
+
+        # Add server time attribute
+        message = json.loads(request.data)
+        message['server_time'] = datetime.now().isoformat()
+
+        # Insert to elasticsearch
+        es.index(index=index_name, doc_type=index_prefix, body=json.dumps(message))
 
     return "True"
 
