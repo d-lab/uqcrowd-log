@@ -2,7 +2,7 @@
 
 This document is to describe the log format of UQCrowd Logging system
 
-The base log message will have the following compulsory field: **log_type**, **sequence_number**, **browser_time**, **session_id**, **worker_id**, **hit_id**, **assessment_id**, **job_id**, **content**
+The base log message will have the following compulsory field: **log_type**, **sequence_number**, **browser_time**, **session_id**, **worker_id**, **hit_id**, **assessment_id**, **content**
 
 The structure of the **content** field may be different according to the log_type,
 this field provides the flexibility for defining the message structures, 
@@ -25,7 +25,6 @@ Sample log message:
         "worker_id": <Worker_ID from Mturk,
         "hit_id": <Hit_ID from MTurk>,
         "assessment_id": <Assessment_ID from Mturk>,
-        "job_id": "TEST1234",
         "content": {
             "message": "Start Session"
         }
@@ -41,6 +40,7 @@ Compulsory: **message**, Optional: **details**
     "content": {
         "message": "Start Session"
         "details": {
+            "job_id": "TEST1234",
             "topic": "random topic name" 
         }
     }
