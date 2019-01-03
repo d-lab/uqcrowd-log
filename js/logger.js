@@ -23,7 +23,7 @@ hit_id = params["hitId"];
 sequence = 0
 message_count = 0
 
-// Send log message to server
+// Define the send_log Function
 function send_log(log_type, subject, detail) {
 
     content = {}
