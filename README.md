@@ -11,10 +11,11 @@ The default logging configuration records following type of log:
 
 1. Start of a session with a auto-generated session_id
 2. Mouse clicks and the position of the clicks
-3. Text editing on TextField and TextArea
-4. Focus event on HTML elements
-5. Windows scroll action
-6. End of a section with total message count.
+3. Text editing on \<input type="text"\> and \<textarea\>
+4. Value change of any \<select\> element
+5. Focus event on HTML elements
+6. Windows scroll action
+7. End of a section with total message count.
 
 
 In order to track additional event, you can also add more tracking script using predefined method named **send_log(log_type, sub_type, detail)**
@@ -52,6 +53,7 @@ user clicks on the textfield with ID of **input01**
 
 The second example will send the message with **html_event** type with **mouseover** sub_type when user hover on any images
 in the document. The information of tag, name, id of those images will be sent along with the message.
-    
+
+All log message will be printed on console so that you can test and verify the injection offline before Publishing a task
 
 _If you need more information, please have a look at the full example here:_ [logger.html](https://github.com/d-lab/uqcrowd-log/blob/master/templates/logger.html)
