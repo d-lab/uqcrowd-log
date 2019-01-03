@@ -2,76 +2,8 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://dke-uqcrowd-log.uqcloud.net/logger/logger.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script>
-    var message_count
-    $.ajax({
-        url: "https://dke-uqcrowd-log.uqcloud.net/analytics/message-count",
-        type: "GET",
-        contentType: "text/plain",
-        success: function(result) {
-            message_count = result
-        }
-    })
-
-    google.charts.load('current', {packages: ['corechart', 'bar']});
-    google.charts.setOnLoadCallback(drawMultSeries);
-
-    function drawMultSeries() {
-        mydata = [["date","count"]]
-        mydata = mydata.concat(message_count)
-        var data = google.visualization.arrayToDataTable(mydata);
-
-        var options = {
-            title: 'Session Count by Day',
-            width: 480,
-            height: 240,
-            legend: 'none',
-            chartArea: {left:'15%',top:'15%',width:'80%',height:'60%'},
-        };
-
-        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-    }
-</script>
-
-<style>
-#analytics {
-    position: fixed;
-    width: 480px;
-    top: 20px;
-    right: -440px;
-    z-index: 9999;
-}
-
-#analytics.show {
-    right: 0;
-}
-
-#analytics .chart {
-    box-sizing: border-box;
-    background: white;
-    border: 1px solid black;
-}
-#analytics .title {
-    color: white;
-    font-weight: bold;
-    background: black;
-}
-#analytics .title span {
-    display: inline-block;
-    margin: 5px 10px;
-    padding: 3px;
-    cursor: pointer;
-}
-</style>
-
-<script>
-    $(document).ready(function() {
-        $("#toggle").on("click", function(event) {
-            $(this).parent().parent().toggleClass("show");
-        });
-    });
-</script>
+<script type="text/javascript" src="https://dke-uqcrowd-log.uqcloud.net/analytics/analytics.js"></script>
+<script type="text/javascript" src="https://dke-uqcrowd-log.uqcloud.net/analytics/analytics.css"></script>
 
 <section id="analytics">
     <div class="title"><span id="toggle">O</span></div>

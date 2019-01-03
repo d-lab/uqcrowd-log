@@ -1,4 +1,4 @@
-from flask import Flask, request, Response
+from flask import Flask, request, Response, send_file
 import json
 import requests
 import sys
@@ -53,6 +53,16 @@ def message_count():
     results = [[item["key_as_string"][:10], item["doc_count"]]
                for item in results["aggregations"]["daily_message_count"]["buckets"]]
     return Response(json.dumps(results), mimetype="application/json")
+
+
+@app.route(api_prefix + "/analytics.js", methods=['GET'])
+def analytics_js():
+    return send_file('./js/analytics.js')
+
+
+@app.route(api_prefix + "/analytics.css", methods=['GET'])
+def analytics_js():
+    return send_file('./js/analytics.css')
 
 
 if __name__ == '__main__':

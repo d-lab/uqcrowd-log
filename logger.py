@@ -40,8 +40,8 @@ def insert():
 
 
 @app.route(api_prefix + "/logger.js", methods=['GET'])
-def logger():
-    return send_file('./logger.js')
+def logger_js():
+    return send_file('./js/logger.js')
 
 
 if __name__ == '__main__':
