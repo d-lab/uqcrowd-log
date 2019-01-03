@@ -10,8 +10,8 @@
             });
         });
 
-        $("img").on("hover", function() {
-            send_log("html_event", "hover", {
+        $("img").on("mouseover", function() {
+            send_log("html_event", "mouseover", {
                 element_tag: $(this).prop("tagName").toLowerCase(),
                 element_name: $(this).attr("name"),
                 element_id: $(this).attr("id"),
@@ -57,6 +57,8 @@
 <p>${abstract_text}</p>
 	<input id="input01" type="text">
     <textarea id="textarea01" type="text"></textarea>
+
+    <img id="image02" name="image02" src="https://requestersandbox.mturk.com/assets/lucy-165b336a1350b7c0249c299fa2750a05362259ffe8041902ade4b6dcd6ee37d7.jpg" alt="Lucy">
 </div>
 </div>
 <!-- End of medical text --><!-- Content Body -->

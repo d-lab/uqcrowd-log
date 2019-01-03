@@ -40,8 +40,8 @@ user clicks on the textfield with ID of **input01**
     <script>
         $(document).ready(function() {
             // Second example 
-            $("img").on("hover", function() {
-                send_log("html_event", "hover", {
+            $("img").on("mouseover", function() {
+                send_log("html_event", "mouseover", {
                     element_tag: $(this).prop("tagName").toLowerCase(),
                     element_name: $(this).attr("name"),
                     element_id: $(this).attr("id"),
