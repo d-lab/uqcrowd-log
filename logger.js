@@ -60,7 +60,6 @@ $(document).ready(function() {
 
     // Start Session
     send_log("message", "Start Session", {
-        job_id: job_id,
         hit_url: hit_url,
         hit_query: query
     });
