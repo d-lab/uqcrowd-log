@@ -1,10 +1,6 @@
 <!-- Bootstrap v3.0.3 --><!-- AV template V0.00 -->
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script>
-
-	// Please set your JobID
-	job_id = "MT1234";
-
 	// Split URL and Query
 	hit_url = document.URL.split('?')[0];
 	query = document.URL.split('?')[1];
@@ -73,21 +69,28 @@
 		});
 
 		// Check Screen Size
-		send_log("message", "Screen Check", {
+		send_log("message", "Screen Size", {
 			screen_width: window.screen.width,
-			screen_height: window.screen.height
+			screen_height: window.screen.height,
+			window_width: $(window).width(),
+			window_height: $(window).height()
 		});
 
 		// Track Mouse Event
-		$("*").on("click", function(event) {
+		$(window).on("click", function(event) {
+			event.stopPropagation();
 			send_log("mouse_event", "click", {
-				element_tag: $(this).prop("tagName").toLowerCase(),
-				element_name: $(this).attr("name"),
-				element_id: $(this).id,
 				event_x: event.pageX,
 				event_y: event.pageY
 			});
-			event.stopPropagation();
+		});
+
+		$("*").on("focus", function(event) {
+			send_log("html_event", "focus", {
+				element_tag: $(this).prop("tagName").toLowerCase(),
+				element_name: $(this).attr("name"),
+				element_id: $(this).attr("id"),
+			});
 		});
 
 		// Track Select Value Changes (Questions)
@@ -95,8 +98,53 @@
 			send_log("html_event", "change_value", {
 				element_tag: $(this).prop("tagName").toLowerCase(),
 				element_name: $(this).attr("name"),
-				element_id: $(this).id,
+				element_id: $(this).attr("id"),
 				value: $(this).children("option:selected").val()
+			});
+		});
+
+		$("input[type='text'], textarea").on("paste", function(event) {
+		    currentPos = $(this).prop("selectionStart");
+			send_log("browser_event", "clipboard", {
+			    action: "paste",
+				element_tag: $(this).prop("tagName").toLowerCase(),
+				element_name: $(this).attr("name"),
+				element_id: $(this).attr("id"),
+				position: currentPos,
+				value: window.event.clipboardData.getData('text'),
+			});
+		});
+
+        $("input[type='text'], textarea").on("cut", function(event) {
+            startPos = $(this).prop('selectionStart')
+            endPos = $(this).prop('selectionEnd')
+			send_log("browser_event", "clipboard", {
+			    action: "cut",
+				element_tag: $(this).prop("tagName").toLowerCase(),
+				element_name: $(this).attr("name"),
+				element_id: $(this).attr("id"),
+				value: $(this).val().substring(startPos, endPos)
+			});
+		});
+
+        $("input[type='text'], textarea").on("copy", function(event) {
+            startPos = $(this).prop('selectionStart')
+            endPos = $(this).prop('selectionEnd')
+			send_log("browser_event", "clipboard", {
+			    action: "copy",
+				element_tag: $(this).prop("tagName").toLowerCase(),
+				element_name: $(this).attr("name"),
+				element_id: $(this).attr("id"),
+				value: $(this).val().substring(startPos, endPos)
+			});
+		});
+
+        $("input[type='text'], textarea").on("blur", function(event) {
+			send_log("html_event", "change_value", {
+				element_tag: $(this).prop("tagName").toLowerCase(),
+				element_name: $(this).attr("name"),
+				element_id: $(this).attr("id"),
+				value: $(this).val()
 			});
 		});
 
@@ -123,9 +171,7 @@
 			});
 		});
 
-
 	});
-
 </script>
 
 <link href="https://s3.amazonaws.com/mturk-public/bs30/css/bootstrap.min.css" rel="stylesheet" />
@@ -162,6 +208,8 @@
 &nbsp;
 
 <p>${abstract_text}</p>
+	<input id="input01" type="text">
+    <textarea id="textarea01" type="text"></textarea>
 </div>
 </div>
 <!-- End of medical text --><!-- Content Body -->

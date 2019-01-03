@@ -22,7 +22,7 @@ Sample log message:
         "sequence_number": 1,
         "browser_time": "2018-09-16T23:40:28+00:00",
         "session_id": "ojkjj8pvav",
-        "worker_id": <Worker_ID from Mturk,
+        "worker_id": <Worker_ID from Mturk>,
         "hit_id": <Hit_ID from MTurk>,
         "assessment_id": <Assessment_ID from Mturk>,
         "content": {
@@ -52,8 +52,7 @@ or
         "message": "End Session",
         "details": {
             "final_result": true
-            "check_result": [true, false]
-            "components": []
+            "check_result": "true|false"
         }
     }
     
@@ -122,7 +121,7 @@ or
         "details": {
             "key": 30,
             "duration": 10,
-            "hold": ["ctrl", "shift"]
+            "hold": "ctrl|shift"
         }
     }
 
@@ -146,7 +145,7 @@ or
     "content": {
         "browser_event": "clipboard",
         "details": {
-            "type": "paste",
+            "action": "paste",
             "value": "the content goes here"
         }
     }
@@ -161,7 +160,7 @@ Optional: **details**
         "details": {
             "element_tag": "section",
             "element_id": "product_detail"
-            "element_class": ["active", "left"]
+            "element_class": "active|left"
         }
     }
 	
@@ -173,7 +172,7 @@ or
         "details": {
             "element_tag": "input",
             "element_id": "product_detail"
-            "element_class": ["active", "left"]
+            "element_class": "active|left"
         }
     }
 
