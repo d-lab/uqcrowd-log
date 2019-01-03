@@ -9,6 +9,15 @@
                 item_2: "this is the detail item 2"
             });
         });
+
+        $("img").on("hover", function() {
+            send_log("html_event", "hover", {
+                element_tag: $(this).prop("tagName").toLowerCase(),
+                element_name: $(this).attr("name"),
+                element_id: $(this).attr("id"),
+            });
+        });
+
     });
 </script>
 

@@ -24,10 +24,10 @@ sequence = 0
 message_count = 0
 
 // Define the send_log Function
-function send_log(log_type, subject, detail) {
+function send_log(log_type, sub_type, detail) {
 
     content = {}
-    content[log_type] = subject;
+    content[log_type] = sub_type;
     content['detail'] =  detail
 
     data = {

@@ -17,21 +17,41 @@ The default logging configuration records following type of log:
 6. End of a section with total message count.
 
 
-In order to track additional event, you can also add more tracking script using predefined method named send_log()
-
-The accepted log format is described in [FORMAT.md](https://github.com/d-lab/uqcrowd-log/blob/master/FORMAT.md)
+In order to track additional event, you can also add more tracking script using predefined method named **send_log(log_type, sub_type, detail)**
+The detailed log format is described in [FORMAT.md](https://github.com/d-lab/uqcrowd-log/blob/master/FORMAT.md)
 
 For example: 
 
     <script>
         $(document).ready(function() {
-            $("#input01").on("blur", function() {
-                send_log("message", "This is the message content", {
+            // First example 
+            $("#input01").on("click", function() {
+                send_log("message", "Hello World!", {
                     item_1: "this is the detail item 1",
                     item_2: "this is the detail item 2"
                 });
-            });
+            });  
         });
     </script>
     
-If you need more information, please have a look at the full example here: [logger.html](https://github.com/d-lab/uqcrowd-log/blob/master/templates/logger.html)
+The first example will send the a **message** log, with the content of "Hello World!" along with an detailed object which contains two child elements when the
+user clicks on the textfield with ID of **input01**
+
+    <script>
+        $(document).ready(function() {
+            // Second example 
+            $("img").on("hover", function() {
+                send_log("html_event", "hover", {
+                    element_tag: $(this).prop("tagName").toLowerCase(),
+                    element_name: $(this).attr("name"),
+                    element_id: $(this).attr("id"),
+                });
+            });      
+        });
+    </script>
+
+The second example will send the message with **html_event** type with **hover** sub_type when user hover on any images
+in the document. The information of tag, name, id of those images will be sent along with the message.
+    
+
+_If you need more information, please have a look at the full example here:_ [logger.html](https://github.com/d-lab/uqcrowd-log/blob/master/templates/logger.html)
