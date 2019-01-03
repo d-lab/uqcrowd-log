@@ -50,7 +50,7 @@ user clicks on the textfield with ID of **input01**
         });
     </script>
 
-The second example will send the message with **html_event** type with **hover** sub_type when user hover on any images
+The second example will send the message with **html_event** type with **mouseover** sub_type when user hover on any images
 in the document. The information of tag, name, id of those images will be sent along with the message.
     
 
