@@ -1,5 +1,5 @@
 from elasticsearch import Elasticsearch
-from flask import Flask, request
+from flask import Flask, request, send_file
 from datetime import datetime
 import redis
 import sys
@@ -16,7 +16,7 @@ cache_mode = False
 
 
 @app.route(api_prefix + "/insert", methods=['POST'])
-def index():
+def insert():
     """ Receive POST request and store the message to redis or elasticsearch depends on cached mode """
     global cache_mode
 
@@ -37,6 +37,11 @@ def index():
         es.index(index=index_name, doc_type=index_prefix, body=json.dumps(message))
 
     return "True"
+
+
+@app.route(api_prefix + "/logger.js", methods=['GET'])
+def logger():
+    return send_file('./logger.js')
 
 
 if __name__ == '__main__':
