@@ -4,11 +4,11 @@ import requests
 import sys
 
 app = Flask(__name__)
-api_prefix = "/analytics/"
+api_prefix = "/analytics"
 base_uri = "http://localhost:9200"
 
 
-@app.route(api_prefix + "session-count", methods=['GET'])
+@app.route(api_prefix + "/session-count", methods=['GET'])
 def session_count():
     uri = base_uri + "/uqcrowd-session-*/_search"
     worker_id = request.args.get('id')
@@ -25,7 +25,7 @@ def session_count():
     return Response(json.dumps(sessions), mimetype="application/json")
 
 
-@app.route(api_prefix + "message-count", methods=['GET'])
+@app.route(api_prefix + "/message-count", methods=['GET'])
 def message_count():
     uri = base_uri + "/uqcrowd-log-*/_search"
     worker_id = request.args.get('worker_id')
@@ -61,8 +61,8 @@ def analytics_js():
 
 
 @app.route(api_prefix + "/analytics.css", methods=['GET'])
-def analytics_js():
-    return send_file('./js/analytics.css')
+def analytics_css():
+    return send_file('./css/analytics.css')
 
 
 if __name__ == '__main__':
