@@ -1,21 +1,22 @@
 # UQCloud Logging System
 
-This document is to describe how to inject javascript to log user actions on a MTurk Hit,
+This document is to describe how to inject javascript to record user actions on a MTurk Hit,
 
-In order to inject the logging configuration, you can simply embed the following script on top of your MTurk Template:
+In order to inject the default logging configuration, you can simply embed the following script on top of your MTurk Template:
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://dke-uqcrowd-log.uqcloud.net/logger/logger.js"></script>
 
 The default logging configuration records following type of log:
 
-1. Start of a session with a auto-generated session_id
-2. Mouse clicks and the position of the clicks
-3. Text editing on \<input type="text"\> and \<textarea\>
-4. Value change of any \<select\> element
-5. Focus event on HTML elements
-6. Windows scroll action
-7. End of a section with total message count.
+1. Start of a session with a auto-generated session_id,
+1. Record the client's screen size and window size 
+1. Mouse clicks and the position of the clicks
+1. Text editing on \<input type="text"\> and \<textarea\>
+1. Value change of any \<select\> element
+1. Focus event on HTML elements
+1. Windows scroll action
+1. End of a section with total message count.
 
 
 In order to track additional event, you can also add more tracking script using predefined method named **send_log(log_type, sub_type, detail)**
