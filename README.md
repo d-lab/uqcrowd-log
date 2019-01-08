@@ -20,7 +20,7 @@ The default logging configuration records following type of log:
 
 
 In order to track additional event, you can also add more tracking script using predefined method named **send_log(log_type, sub_type, detail)**
-The detailed log format is described in [FORMAT.md](https://github.com/d-lab/uqcrowd-log/blob/master/FORMAT.md)
+The detailed log format is described in [FORMAT.md](./FORMAT.md)
 
 For example: 
 
@@ -57,4 +57,4 @@ in the document. The information of tag, name, id of those images will be sent a
 
 All log message will be printed on console so that you can test and verify the injection offline before Publishing a task
 
-_If you need more information, please have a look at the full example here:_ [logger.html](https://github.com/d-lab/uqcrowd-log/blob/master/templates/logger.html)
+_If you need more information, please have a look at the full example here:_ [logger.html](./templates/logger.html)
