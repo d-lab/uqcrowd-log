@@ -99,6 +99,25 @@ $(document).ready(function() {
         });
     });
 
+    // Track Radio Input Value Changes
+    $("input[type='radio']").on("click", function() {
+        send_log("html_event", "change_value", {
+            element_tag: $(this).prop("tagName").toLowerCase(),
+            element_name: $(this).attr("name"),
+            element_id: $(this).attr("id"),
+            value: $(this).val()
+        });
+    });
+
+    // Handle input and textarea
+    $("input[type='text'], textarea").on("focus", function(event) {
+        send_log("html_event", "focus", {
+            element_tag: $(this).prop("tagName").toLowerCase(),
+            element_name: $(this).attr("name"),
+            element_id: $(this).attr("id"),
+        });
+    });
+
     $("input[type='text'], textarea").on("paste", function(event) {
         currentPos = $(this).prop("selectionStart");
         send_log("browser_event", "clipboard", {
