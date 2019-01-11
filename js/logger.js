@@ -111,23 +111,6 @@ $(document).ready(function() {
         });
     });
 
-    // Track Checkbox Input Value Changes
-    $("input:checkbox").on("click", function() {
-        name = $(this).attr("name");
-        arr = []
-        $(":checkbox:checked").each(function() {
-            arr.push($(this).val())
-        })
-        send_log("html_event", "change_value", {
-            element_tag: $(this).prop("tagName").toLowerCase(),
-            element_name: $(this).attr("name"),
-            element_id: $(this).attr("id"),
-            input_type: "checkbox",
-            value: arr.join("|")
-        });
-    });
-
-
     // Handle input and textarea
     prevKey = 0
     $("input:text, textarea").on("click", function(event) {
