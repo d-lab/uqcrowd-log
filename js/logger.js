@@ -95,6 +95,7 @@ $(document).ready(function() {
             element_tag: $(this).prop("tagName").toLowerCase(),
             element_name: $(this).attr("name"),
             element_id: $(this).attr("id"),
+            input_type: "select",
             value: $(this).children("option:selected").val()
         });
     });
@@ -126,23 +127,27 @@ $(document).ready(function() {
         });
     });
 
+
     // Handle input and textarea
-    $("input[type='text'], textarea").on("focus", function(event) {
-        send_log("html_event", "focus", {
+
+    $("input:text, textarea").on("blur", function(event) {
+        send_log("html_event", "change_value", {
             element_tag: $(this).prop("tagName").toLowerCase(),
             element_name: $(this).attr("name"),
             element_id: $(this).attr("id"),
+            input_type: "text",
+            cursor_position: $(this).prop("selectionStart"),
+            value: $(this).val()
         });
     });
 
     $("input[type='text'], textarea").on("paste", function(event) {
-        currentPos = $(this).prop("selectionStart");
         send_log("browser_event", "clipboard", {
             action: "paste",
             element_tag: $(this).prop("tagName").toLowerCase(),
             element_name: $(this).attr("name"),
             element_id: $(this).attr("id"),
-            position: currentPos,
+            cursor_position: $(this).prop("selectionStart"),
             value: window.event.clipboardData.getData('text'),
         });
     });
@@ -155,6 +160,7 @@ $(document).ready(function() {
             element_tag: $(this).prop("tagName").toLowerCase(),
             element_name: $(this).attr("name"),
             element_id: $(this).attr("id"),
+            cursor_position: $(this).prop("selectionStart"),
             value: $(this).val().substring(startPos, endPos)
         });
     });
@@ -167,16 +173,8 @@ $(document).ready(function() {
             element_tag: $(this).prop("tagName").toLowerCase(),
             element_name: $(this).attr("name"),
             element_id: $(this).attr("id"),
+            cursor_position: $(this).prop("selectionStart"),
             value: $(this).val().substring(startPos, endPos)
-        });
-    });
-
-    $("input[type='text'], textarea").on("blur", function(event) {
-        send_log("html_event", "change_value", {
-            element_tag: $(this).prop("tagName").toLowerCase(),
-            element_name: $(this).attr("name"),
-            element_id: $(this).attr("id"),
-            value: $(this).val()
         });
     });
 
