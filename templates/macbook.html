@@ -126,7 +126,6 @@
         width: 100%;
     }
     label {
-        margin-left: 5px;
         font-family: sans-serif;
     }
     input {
@@ -195,8 +194,10 @@
     </section>
     <section>
         <h3>Please choose the most appropriate model <span>(required)</span></h3>
-        <input type="radio" id="model-air" name="model" value="macbook-air"><label>MacBook Air</label>
-        <input type="radio" id="model-pro" name="model" value="macbook-pro"><label>MacBook Pro</label>
+        <input type="radio" id="model-air" name="model" value="macbook-air">
+        <label for="model-air">MacBook Air</label>
+        <input type="radio" id="model-pro" name="model" value="macbook-pro">
+        <label for="model-pro">MacBook Pro</label>
     </section>
     <section>
         <h3>Please choose best match year and screensize <span>(required)</span></h3>
@@ -225,11 +226,16 @@
     </section>
     <section>
         <h3>Please tick any nearby Apple products if there are <span>(required)</span></h3>
-        <input type="checkbox" id="nearby-none" name="nearby-none" value="none"><label>Nothing</label>
-        <input type="checkbox" id="nearby-iphone" name="nearby" value="iphone"><label>iPhone</label>
-        <input type="checkbox" id="nearby-ipad" name="nearby" value="ipad"><label>ipad</label>
-        <input type="checkbox" id="nearby-imac" name="nearby" value="imac"><label>iMac</label>
-        <input type="checkbox" id="nearby-watch" name="nearby" value="watch"><label>Apple Watch</label>
+        <input type="checkbox" id="nearby-none" name="nearby-none" value="none">
+        <label for="nearby-none"l>Nothing</label>
+        <input type="checkbox" id="nearby-iphone" name="nearby" value="iphone">
+        <label for="nearby-iphone">iPhone</label>
+        <input type="checkbox" id="nearby-ipad" name="nearby" value="ipad">
+        <label for="nearby-ipad">ipad</label>
+        <input type="checkbox" id="nearby-imac" name="nearby" value="imac">
+        <label for="nearby-imac">iMac</label>
+        <input type="checkbox" id="nearby-watch" name="nearby" value="watch">
+        <label for="nearby-watch">Apple Watch</label>
     </section>
     <section>
         <h3>Please guess the detailed specification of this MacBook <span>(required)</span></h3>
