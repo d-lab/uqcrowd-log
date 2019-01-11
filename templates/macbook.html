@@ -1,6 +1,114 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<!--<script type="text/javascript" src="https://dke-uqcrowd-log.uqcloud.net/logger/logger.js"></script>-->
-<script src="../js/logger.js"></script>
+<script type="text/javascript" src="https://dke-uqcrowd-log.uqcloud.net/logger/logger.js"></script>
+<!--<script src="../js/logger.js"></script>-->
+
+<script>
+    function validationCheck() {
+
+        if ($("#model-air:checked").length + $("#model-pro:checked").length === 0 ) {
+            $("#label-error").text("You must select the appropriate model!");
+            return false;
+        }
+
+        if ($("#year").val() == "0" || $("#screensize").val() == "0") {
+            $("#label-error").text("You must choose the year and screen size!");
+            return false;
+        }
+
+        if ($("#specification").val().trim() == "") {
+            $("#label-error").text("Please guess the specification!");
+            return false;
+        }
+
+        arr = []
+        $(":checkbox[name='nearby']").each(function() {
+            arr.push($(this).val())
+        })
+
+        if (arr.length === 0) {
+            $("#label-error").text("Please select the nearby devices, otherwise, please choose nothing!");
+            return false;
+        }
+
+        return true;
+
+    }
+
+    $(document).ready(function() {
+        // Hide mturk's submit button
+        $("#submitButton").hide();
+
+        // Disable the customized submit button and
+        var wait = 9;
+        $("#button-submit").addClass("disabled");
+        $("#button-submit").text("Submit (" + wait + ")");
+
+        // Countdown to enable submit button
+        var downloadTimer = setInterval(function() {
+            $("#button-submit").text("Submit (" + --wait + ")");
+            if (wait <= 0) {
+                clearInterval(downloadTimer);
+                $("#button-submit").text("Submit");
+                $("#button-submit").removeClass("disabled");
+            }
+        },1000);
+
+        // Clear other checkbox when "Nothing" is checked
+        $("#nearby-none").on("click", function() {
+            $(":checkbox[name='nearby']").prop("checked", false);
+            $(this).prop("checked", true);
+        });
+
+        // Clear "Nothing" checkbox when others are checked
+        $(":checkbox[name='nearby']").on("click", function() {
+            $("#nearby-none").prop("checked", false);
+        });
+
+
+        // Track Checkbox Input Value Changes
+        $(":checkbox").on("click", function() {
+            name = $(this).attr("name");
+            arr = []
+            $(":checkbox:checked").each(function() {
+                arr.push($(this).val())
+            })
+            send_log("html_event", "change_value", {
+                element_tag: $(this).prop("tagName").toLowerCase(),
+                element_name: $(this).attr("name"),
+                element_id: $(this).attr("id"),
+                input_type: "checkbox",
+                value: arr.join("|")
+            });
+        });
+
+        // Track hover on image event
+        $("img").on("mouseover", function() {
+            send_log("html_event", "mouseover", {
+                element_tag: $(this).prop("tagName").toLowerCase(),
+                element_name: $(this).attr("name"),
+                element_id: $(this).attr("id"),
+            });
+        });
+
+        // Validate and submit the form
+        $("#button-submit").on("click", function(){
+
+            if ($(this).hasClass("disabled")) {
+                return false;
+            }
+
+            console.log("check");
+            console.log(validationCheck());
+
+            if (validationCheck()) {
+                console.log("clicked")
+                $("#submitButton").trigger("click");
+            }
+            console.log("not clicked")
+        });
+
+    });
+</script>
 
 <style>
     main {
@@ -37,30 +145,64 @@
         background: #ccc;
         padding: 5px;
     }
+    h3 span {
+        color: #e33;
+        font-weight: normal;
+    }
     textarea {
         width: 80%;
         height: 100px;
         font-size: inherit;
         resize: none;
         padding: 5px;
+        margin: 5px;
+    }
+    #button-submit {
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: inherit;
+        font-weight: bold;
+        background-color: #fff;
+        border: 1px solid #555;
+        user-select: none;
+    }
+    #button-submit:hover {
+        background-color: #444;
+        color: white;
+        cursor: pointer;
+    }
+    #button-submit.disabled {
+        color: #bbb;
+        border: 1px solid #bbb;
+    }
+    #button-submit.disabled:hover {
+        background-color: #fff;
+        cursor: default;
+    }
+
+    #label-error {
+        margin-top: 10px;
+        display: block;
+        color: #e33;
     }
 </style>
 
 <main>
     <section>
         <h2>Determine the MacBook model and find the surrounding <br> Apple products in the following image</h2>
-        <img src="../data/macbook/pexels-photo.jpg">
+        <img src="${image_url}">
     </section>
     <section>
-        <h3>Please choose the most appropriate model</h3>
+        <h3>Please choose the most appropriate model <span>(required)</span></h3>
         <input type="radio" id="model-air" name="model" value="macbook-air"><label>MacBook Air</label>
         <input type="radio" id="model-pro" name="model" value="macbook-pro"><label>MacBook Pro</label>
     </section>
     <section>
-        <h3>Please choose best match year and screensize</h3>
+        <h3>Please choose best match year and screensize <span>(required)</span></h3>
         <label>Year: </label>
         <select id="year" name="year">
-            <option value="0">Undefined</option>
+            <option value="0">-</option>
             <option value="2018">2018</option>
             <option value="2017">2017</option>
             <option value="2016">2016</option>
@@ -74,7 +216,7 @@
         </select>
         <label>Screensize: </label>
         <select id="screensize" name="screensize">
-            <option value="0">Undefined</option>
+            <option value="0">-</option>
             <option value="11">11 inches</option>
             <option value="13">13 inches</option>
             <option value="15">15 inches</option>
@@ -82,15 +224,22 @@
         </select>
     </section>
     <section>
-        <h3>Please tick any nearby Apple products if there are</h3>
+        <h3>Please tick any nearby Apple products if there are <span>(required)</span></h3>
+        <input type="checkbox" id="nearby-none" name="nearby-none" value="none"><label>Nothing</label>
         <input type="checkbox" id="nearby-iphone" name="nearby" value="iphone"><label>iPhone</label>
         <input type="checkbox" id="nearby-ipad" name="nearby" value="ipad"><label>ipad</label>
         <input type="checkbox" id="nearby-imac" name="nearby" value="imac"><label>iMac</label>
         <input type="checkbox" id="nearby-watch" name="nearby" value="watch"><label>Apple Watch</label>
     </section>
     <section>
-        <h3>Please guess the detailed specification of this MacBook</h3>
-        <textarea id="specification" name="specification">CPU Model, Memory Capacity, HDD/SSD Storage</textarea>
+        <h3>Please guess the detailed specification of this MacBook <span>(required)</span></h3>
+        <label>Example: CPU Model, Memory Capacity, HDD/SSD Storage</label>
+        <textarea id="specification" name="specification"></textarea>
+    </section>
+    <section>
+        <label id="button-submit">Submit</label>
+        <label id="label-error">&nbsp</label>
     </section>
 </main>
+
 
