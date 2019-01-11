@@ -1,0 +1,96 @@
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://dke-uqcrowd-log.uqcloud.net/logger/logger.js"></script>
+<!--<script src="../js/logger.js"></script>-->
+
+<style>
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    section {
+        background: #eee;
+        width: 720px;
+        text-align: center;
+        padding: 0 10px 20px 10px;
+    }
+    img {
+        width: 100%;
+    }
+    label {
+        margin-left: 5px;
+        font-family: sans-serif;
+    }
+    input {
+        margin-left: 20px;
+    }
+    select {
+        margin-right: 20px;
+        font-size: 0.9em;
+    }
+    h2 {
+        background: #444;
+        color: white;
+        padding: 10px
+    }
+    h3 {
+        background: #ccc;
+        padding: 5px;
+    }
+    textarea {
+        width: 80%;
+        height: 100px;
+        font-size: inherit;
+        resize: none;
+        padding: 5px;
+    }
+</style>
+
+<main>
+    <section>
+        <h2>Determine the MacBook model and find the surrounding <br> Apple products in the following image</h2>
+        <img src="../data/macbook/pexels-photo.jpg">
+    </section>
+    <section>
+        <h3>Please choose the most appropriate model</h3>
+        <input type="radio" id="model-air" name="model" value="macbook-air"><label>MacBook Air</label>
+        <input type="radio" id="model-pro" name="model" value="macbook-pro"><label>MacBook Pro</label>
+    </section>
+    <section>
+        <h3>Please choose best match year and screensize</h3>
+        <label>Year: </label>
+        <select id="year" name="year">
+            <option value="0">Undefined</option>
+            <option value="2018">2018</option>
+            <option value="2017">2017</option>
+            <option value="2016">2016</option>
+            <option value="2015">2015</option>
+            <option value="2014">2014</option>
+            <option value="2013">2013</option>
+            <option value="2012">2012</option>
+            <option value="2011">2011</option>
+            <option value="2010">2010</option>
+            <option value="2009">Earlier</option>
+        </select>
+        <label>Screensize: </label>
+        <select id="screensize" name="screensize">
+            <option value="0">Undefined</option>
+            <option value="11">11 inches</option>
+            <option value="13">13 inches</option>
+            <option value="15">15 inches</option>
+            <option value="17">17 inches</option>
+        </select>
+    </section>
+    <section>
+        <h3>Please tick any nearby Apple products if there are</h3>
+        <input type="checkbox" id="nearby-iphone" name="nearby-iphone" value="iphone"><label>iPhone</label>
+        <input type="checkbox" id="nearby-ipad" name="nearby-ipad" value="ipad"><label>ipad</label>
+        <input type="checkbox" id="nearby-imac" name="nearby-imac" value="imac"><label>iMac</label>
+        <input type="checkbox" id="nearby-watch" name="nearby-watch" value="watch"><label>Apple Watch</label>
+    </section>
+    <section>
+        <h3>Please guess the detailed specification of this MacBook</h3>
+        <textarea id="specification" name="specification">CPU Model, Memory Capacity, HDD/SSD Storage</textarea>
+    </section>
+</main>
+
