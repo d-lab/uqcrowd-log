@@ -31,7 +31,7 @@ def insert():
 
         # Add server time attribute
         message = json.loads(request.data)
-        message['server_time'] = datetime.now().isoformat()
+        message['server_time'] = datetime.now().isoformat() + "+10:00"
 
         # Insert to elasticsearch
         es.index(index=index_name, doc_type=index_prefix, body=json.dumps(message))
