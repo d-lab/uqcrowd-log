@@ -129,6 +129,35 @@ $(document).ready(function() {
 
 
     // Handle input and textarea
+    prevKey = 0
+    $("input:text, textarea").on("click", function(event) {
+        send_log("html_event", "change_value", {
+            element_tag: $(this).prop("tagName").toLowerCase(),
+            element_name: $(this).attr("name"),
+            element_id: $(this).attr("id"),
+            input_type: "text",
+            cursor_position: $(this).prop("selectionStart"),
+        });
+        prevKey = 0;
+    });
+
+    $("input:text, textarea").on("keyup", function(event) {
+        specialKey = [0, 8, 13, 37, 38, 39, 40, 46]
+        // click, enter, backspace, left, up, right, down, delete
+        currentKey = event.keyCode
+        if ((!specialKey.includes(currentKey) && specialKey.includes(prevKey)) ||
+         (specialKey.includes(currentKey) && currentKey !== prevKey)) {
+            send_log("html_event", "change_value", {
+                element_tag: $(this).prop("tagName").toLowerCase(),
+                element_name: $(this).attr("name"),
+                element_id: $(this).attr("id"),
+                input_type: "text",
+                cursor_position: $(this).prop("selectionStart"),
+                value: $(this).val()
+            });
+        }
+        prevKey = event.keyCode
+    });
 
     $("input:text, textarea").on("blur", function(event) {
         send_log("html_event", "change_value", {
