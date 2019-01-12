@@ -60,6 +60,7 @@ $(document).ready(function() {
 
     // Start Session
     send_log("message", "Start Session", {
+        user_agent: navigator.userAgent,
         hit_url: hit_url,
         hit_query: query
     });
