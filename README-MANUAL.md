@@ -62,8 +62,9 @@ a slack message to channel #system-notification to CrowOnTour Slack Team
 
 Export data from elasticsearch
     
-    python /opt/uqcrowd-log/export.py datafile.jl
-    
+    python /opt/uqcrowd-log/export.py filename.jl
+
+
 Import the data into elasticsearch
 
-    python /opt/uqcrowd-log/import.py datafile.jl
+    python /opt/uqcrowd-log/import.py filename.jl
