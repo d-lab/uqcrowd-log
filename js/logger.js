@@ -60,9 +60,17 @@ $(document).ready(function() {
 
     // Start Session
     send_log("message", "Start Session", {
-        user_agent: navigator.userAgent,
         hit_url: hit_url,
         hit_query: query
+    });
+
+    send_log("message", "Client Info", {
+        user_agent: navigator.userAgent,
+        fingerprint: new Fingerprint().get()
+    });
+
+    $.getJSON('https://ipinfo.io/json', function(data) {
+        send_log("message", "IP Address", data);
     });
 
     // Check Screen Size

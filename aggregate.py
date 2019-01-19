@@ -146,6 +146,7 @@ def main(date):
     if sessions is None:
         return
 
+
     for session_id in sessions:
         session = get_session(base_uri + "/" + log_index_prefix + "-" + date + "/_search", session_id)
         if session is not None:

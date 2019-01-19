@@ -24,12 +24,14 @@ This document is to describe how to inject javascript to record user actions on 
 In order to inject the default logging configuration, you can simply embed the following script on top of your MTurk Template:
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://dke-uqcrowd-log.uqcloud.net/logger/logger.js"></script>
+    <script type="text/javascript" src="https://dke-uqcrowd-log.uqcloud.net/logger/fingerprint.js"></script>
+    <script type="text/javascript" src="https://dke-uqcrowd-log.uqcloud.net/logger/logger.js"></script>
 
 The default logging configuration records following type of log:
 
 1. Start of a session with a auto-generated session_id,
 1. Record the client's screen size and window size 
+1. Record the browser fingerprint and client IP
 1. Mouse clicks and the position of the clicks
 1. Text editing on \<input type="text"\> and \<textarea\>
 1. Value change of any \<select\> element

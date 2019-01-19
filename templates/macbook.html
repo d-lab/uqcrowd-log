@@ -1,7 +1,8 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="https://dke-uqcrowd-log.uqcloud.net/logger/logger.js"></script>
-<script src="https://dke-uqcrowd-log.uqcloud.net/static/js/fingerprint.js"></script>
-<!--<script src="../js/logger.js"></script>-->
+<!--<script type="text/javascript" src="https://dke-uqcrowd-log.uqcloud.net/logger/fingerprint.js"></script>-->
+<!--<script type="text/javascript" src="https://dke-uqcrowd-log.uqcloud.net/logger/logger.js"></script>-->
+<script src="../js/fingerprint.js"></script>
+<script src="../js/logger.js"></script>
 <script>
 
     function validationCheck() {
@@ -37,13 +38,6 @@
     }
 
     $(document).ready(function() {
-
-        $.getJSON('https://ipinfo.io/json', function(data) {
-            send_log("message", "Client Info", {
-                fingerprint: new Fingerprint().get(),
-                ip_address: data['ip'],
-            });
-        });
 
         // Hide mturk's submit button
         $("#submitButton").hide();
