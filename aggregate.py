@@ -60,11 +60,6 @@ def get_session(uri, session_id):
                     "field": "content.details.fingerprint"
                 }
             },
-            "message_count": {
-                "terms": {
-                    "field": "log_type.keyword"
-                }
-            },
             "assignment_id": {
                 "terms": {
                     "field": "assignment_id.keyword"
@@ -98,8 +93,7 @@ def get_session(uri, session_id):
 
     result = {
         "session_id": session_id,
-        "message_count": data["aggregations"]["message_count"]["buckets"],
-        "total_count": data["hits"]["total"],
+        "message_count": data["hits"]["total"],
         "start_time": data["aggregations"]["start_time"]["value_as_string"],
         "end_time": data["aggregations"]["end_time"]["value_as_string"],
         "duration": data["aggregations"]["end_time"]["value"] - data["aggregations"]["start_time"]["value"]
@@ -107,7 +101,7 @@ def get_session(uri, session_id):
 
     for aggs in ("worker_id", "hit_id", "assignment_id", "ip_address", "fingerprint"):
         if len(data["aggregations"][aggs]["buckets"]) > 0:
-            data[aggs] = data["aggregations"][aggs]["buckets"][0]["key"]
+            result[aggs] = data["aggregations"][aggs]["buckets"][0]["key"]
 
     return result
 
