@@ -143,8 +143,7 @@ def main(date):
     print("Delete Old Index:", date, delete_index(base_uri + "/" + session_index_prefix + "-" + date))
 
     sessions = get_sessions(base_uri + "/" + log_index_prefix + "-" + date + "/_search")
-    if len(sessions) == 0:
-        print("No session found!")
+    if sessions is None:
         return
 
     for session_id in sessions:
