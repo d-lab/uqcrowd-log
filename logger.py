@@ -45,8 +45,9 @@ def logger_js():
 
 
 @app.route(api_prefix + "/fingerprint.js", methods=['GET'])
-def logger_js():
+def fingerprint_js():
     return send_file('./js/fingerprint.js')
+
 
 if __name__ == '__main__':
     # Check commandline arguments
