@@ -28,44 +28,14 @@ def get_sessions(uri):
     results = json.loads(response.text)
     if "error" in results:
         print(json.dumps(results, indent=4))
-        return None
+        return []
     else:
         return [bucket["key"] for bucket in results["aggregations"]["session_id"]["buckets"]]
-
-
-def get_session_info(uri, session_id):
-    query = {
-        "size": 1,
-        "query": {
-            "match": {
-                "session_id": session_id
-            }
-        },
-        "aggs": {
-            "log_type": {
-                "terms": {"field": "log_type.keyword" }
-            }
-        }
-    }
-    response = requests.get(uri, headers={"Content-Type": "application/json"}, data=json.dumps(query))
-    results = json.loads(response.text)
-    if "error" in results:
-        print(json.dumps(results, indent=4))
-        return None
-    else:
-        result = results["hits"]["hits"][0]["_source"]
-        return {
-            "worker_id": result.get("worker_id"),
-            "hit_id": result.get("hit_id"),
-            "assignment_id": result.get("assignment_id"),
-        }
 
 
 def get_session(uri, session_id):
     """(object) Get all the user actions, client log messages of a session. All the data is aggregated
     as the predefined query.
-
-    Todo: add functions to get additional information such as hit_id, assignment_id, final_result
 
     Parameters:
         uri (string): The uri of ES search API including the index name
@@ -85,12 +55,12 @@ def get_session(uri, session_id):
                     "field": "content.details.ip.keyword"
                 }
             },
-            "finger_print": {
+            "fingerprint": {
                 "terms": {
                     "field": "content.details.fingerprint"
                 }
             },
-            "log_type": {
+            "message_count": {
                 "terms": {
                     "field": "log_type.keyword"
                 }
@@ -124,23 +94,22 @@ def get_session(uri, session_id):
     }
 
     response = requests.get(uri, headers={"Content-Type": "application/json"}, data=json.dumps(query))
-    results = json.loads(response.text)
+    data = json.loads(response.text)
 
-    session_info = get_session_info(uri, session_id)
+    result = {
+        "session_id": session_id,
+        "message_count": data["aggregations"]["message_count"]["buckets"],
+        "total_count": data["hits"]["total"],
+        "start_time": data["aggregations"]["start_time"]["value_as_string"],
+        "end_time": data["aggregations"]["end_time"]["value_as_string"],
+        "duration": data["aggregations"]["end_time"]["value"] - data["aggregations"]["start_time"]["value"]
+    }
 
-    if results.get("hits"):
-        return {
-            "session_id": session_id,
-            "worker_id": session_info.get("worker_id"),
-            "hit_id": session_info.get("hit_id"),
-            "assignment_id": session_info.get("assignment_id"),
-            "message_count": results["hits"]["total"],
-            "start_time": results["aggregations"]["start_time"]["value_as_string"],
-            "end_time": results["aggregations"]["end_time"]["value_as_string"],
-            "duration": results["aggregations"]["end_time"]["value"] - results["aggregations"]["start_time"]["value"],
-        }
-    else:
-        return None
+    for aggs in ("worker_id", "hit_id", "assignment_id", "ip_address", "fingerprint"):
+        if len(data["aggregations"][aggs]["buckets"]) > 0:
+            data[aggs] = data["aggregations"][aggs]["buckets"][0]["key"]
+
+    return result
 
 
 def add_session(uri, session):
@@ -178,9 +147,6 @@ def main(date):
     print("Delete Old Index:", date, delete_index(base_uri + "/" + session_index_prefix + "-" + date))
 
     sessions = get_sessions(base_uri + "/" + log_index_prefix + "-" + date + "/_search")
-    if sessions is None:
-        return
-
     for session_id in sessions:
         session = get_session(base_uri + "/" + log_index_prefix + "-" + date + "/_search", session_id)
         if session is not None:
