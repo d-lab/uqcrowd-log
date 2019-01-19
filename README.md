@@ -1,4 +1,23 @@
-# UQCloud Logging System
+# UQCrowd Logging System
+
+**More Documents:**
+
+1. Installation & Operation Guide: [README-MANUAL.md](README-MANUAL.md)
+1. Log Message Format: [README-FORMAT.md](README-FORMAT.md)
+
+## System Overall
+
+The UQCrowd-Logging system uses HAProxy as a reverse proxy to distribute the incoming requests to multiple backends,
+the optimized number of backends depends on the server's configuration, 8 is the optimized number for a server
+with 40 Core, 60GB of RAM (derived from our performance test). The maximum throughput with the current configuration
+ is ~2300 request/s (which can be doubled by adopting a message queue such as Redis)
+
+![](docs/diagram.png)
+**Figure 1.** Overall system diagram
+
+_Note: The SSL certificates is handled by the UQ's Front Proxy._
+
+## How To Use
 
 This document is to describe how to inject javascript to record user actions on a MTurk Hit,
 
@@ -20,7 +39,8 @@ The default logging configuration records following type of log:
 
 
 In order to track additional event, you can also add more tracking script using predefined method named **send_log(log_type, sub_type, detail)**
-The detailed log format is described in [FORMAT.md](./FORMAT.md)
+The detailed log format is described in [README-FORMAT.md](README-FORMAT.md)
+
 
 For example: 
 
@@ -57,4 +77,4 @@ in the document. The information of tag, name, id of those images will be sent a
 
 All log message will be printed on console so that you can test and verify the injection offline before Publishing a task
 
-_If you need more information, please have a look at the full example here:_ [logger.html](./templates/logger.html)
+*If you need more information, please have a look at the full example here:* [templates/macbook.html](./templates/macbook.html)
