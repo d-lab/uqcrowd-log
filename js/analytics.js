@@ -17,19 +17,19 @@ function drawMultiSeries() {
     data.addColumn('string', 'Date');
     data.addColumn('number', 'Session Count');
     data.addColumn('number', 'Message Count');
-    data.addColumn('number', 'Total Duration');
+    data.addColumn('number', 'Avg Duration');
 
     jsonData.forEach(function (row) {
         data.addRow([
             row.datetime,
             row.session_count,
             row.message_count,
-            row.total_duration
+            row.total_duration/1000/row.session_count
         ]);
     });
 
     var options = {
-        title: 'Session Count by Day',
+        title: '',
         width: 480,
         height: 240,
         legend: 'none',
