@@ -23,9 +23,29 @@ This document is to describe how to inject javascript to record user actions on 
 
 In order to inject the default logging configuration, you can simply embed the following script on top of your MTurk Template:
 
+    <!-- BEGIN -->
+    
+    <!-- Jquery and Google Chart Library -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <!-- Logging System Script -->
     <script type="text/javascript" src="https://dke-uqcrowd-log.uqcloud.net/logger/fingerprint.js"></script>
     <script type="text/javascript" src="https://dke-uqcrowd-log.uqcloud.net/logger/logger.js"></script>
+    
+    <!-- Analytics Script and Style -->
+    <script type="text/javascript" src="https://dke-uqcrowd-log.uqcloud.net/analytics/analytics.js"></script>
+    <link rel="stylesheet" href="https://dke-uqcrowd-log.uqcloud.net/analytics/analytics.css"/>
+    
+    <!-- Analytics Charts Container -->
+    <div id="uqcrowd-analytics">
+        <div class="title"><span id="toggle">+</span></div>
+        <div class="chart">
+            <div id="chart_div"></div>
+        </div>
+    </div>
+    
+    <!-- END  -->
 
 The default logging configuration records following type of log:
 

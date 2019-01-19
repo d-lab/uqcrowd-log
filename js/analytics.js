@@ -1,6 +1,6 @@
 var message_count
 $.ajax({
-    url: "https://dke-uqcrowd-log.uqcloud.net/analytics/message-count",
+    url: "http://localhost:6001/analytics/worker/AFQP6LS4IVIMY",
     type: "GET",
     contentType: "text/plain",
     success: function(result) {
@@ -14,7 +14,7 @@ google.charts.setOnLoadCallback(drawMultSeries);
 function drawMultSeries() {
     mydata = [["date","count"]]
     mydata = mydata.concat(message_count)
-    var data = google.visualization.arrayToDataTable(mydata);
+    var data = new google.visualization.DataTable(mydata);
 
     var options = {
         title: 'Session Count by Day',

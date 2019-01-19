@@ -1,4 +1,4 @@
-#analytics {
+#uqcrowd-analytics {
     position: fixed;
     width: 480px;
     top: 20px;
@@ -6,21 +6,21 @@
     z-index: 9999;
 }
 
-#analytics.show {
+#uqcrowd-analytics.show {
     right: 0;
 }
 
-#analytics .chart {
+#uqcrowd-analytics .chart {
     box-sizing: border-box;
     background: white;
     border: 1px solid black;
 }
-#analytics .title {
+#uqcrowd-analytics .title {
     color: white;
     font-weight: bold;
     background: black;
 }
-#analytics .title span {
+#uqcrowd-analytics .title span {
     display: inline-block;
     margin: 5px 10px;
     padding: 3px;
