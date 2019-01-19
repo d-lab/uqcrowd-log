@@ -27,6 +27,9 @@ Sample log message:
         "assessment_id": <Assessment_ID from Mturk>,
         "content": {
             "message": "Start Session"
+            "details": {
+                "hit_url": "https://localhost/"
+            }
         }
     }
 

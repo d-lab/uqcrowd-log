@@ -17,8 +17,11 @@ if __name__ == "__main__":
     for line in lines:
         if count % 1000 == 0:
             print("Imported", count, "of", total)
-        source = json.loads(line)
-        index_name = index_prefix + "-" + source["server_time"][:10]
-        es.index(index=index_name, doc_type=index_prefix, body=json.dumps(source))
-        count += 1
+        try:
+            source = json.loads(line)
+            index_name = index_prefix + "-" + source["server_time"][:10]
+            es.index(index=index_name, doc_type=index_prefix, body=json.dumps(source))
+            count += 1
+        except Exception as ex:
+            print(ex, line)
 
