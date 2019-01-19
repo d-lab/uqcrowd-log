@@ -10,12 +10,15 @@ if __name__ == "__main__":
     es = Elasticsearch()
 
     with open(file_name) as file:
-        data = json.load(file)
+        lines = file.readlines()
 
-    hits = data.get("hits").get("hits")
-    sources = [hit.get("_source") for hit in hits]
-
-    for source in sources:
-        print(source)
+    total = len(lines)
+    count = 0
+    for line in lines:
+        if count % 1000 == 0:
+            print("Imported", count, "of", total)
+        source = json.loads(line)
         index_name = index_prefix + "-" + source["server_time"][:10]
         es.index(index=index_name, doc_type=index_prefix, body=json.dumps(source))
+        count += 1
+
