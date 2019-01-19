@@ -17,6 +17,7 @@
 }
 #uqcrowd-analytics .title {
     font-family: sans-serif;
+    padding-top: 2px;
     color: white;
     font-weight: bold;
     background: black;

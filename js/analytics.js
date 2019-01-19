@@ -1,13 +1,14 @@
 var jsonData
 
 // Get the worker ID from logger.js
+$("#uqcrowd-analytics").hide();
 $.ajax({
     url: "https://dke-uqcrowd-log.uqcloud.net/analytics/session/worker/" + worker_id + "/session_count",
     type: "GET",
     contentType: "text/plain",
     success: function(results) {
         jsonData = results;
-        $("#uqcrowd-analytics").show()
+        $("#uqcrowd-analytics").show();
     }
 })
 
@@ -19,14 +20,14 @@ function drawMultiSeries() {
 
     data.addColumn('string', 'Date');
     data.addColumn('number', 'Session Count');
-    data.addColumn('number', 'Message Count');
-    data.addColumn('number', 'Avg Duration');
+    data.addColumn('number', 'Avg Message Count');
+    data.addColumn('number', 'Average Duration');
 
     jsonData.forEach(function (row) {
         data.addRow([
             row.datetime,
             row.session_count,
-            row.message_count,
+            row.message_count/row.session_count,
             row.total_duration/1000/row.session_count
         ]);
     });
@@ -36,7 +37,7 @@ function drawMultiSeries() {
         width: 480,
         height: 240,
         legend: 'none',
-        chartArea: {left:'15%',top:'15%',width:'80%',height:'60%'},
+        chartArea: {left:'10%',top:'15%',width:'85%',height:'60%'},
     };
 
     var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
@@ -44,8 +45,7 @@ function drawMultiSeries() {
 }
 
 $(document).ready(function() {
-    $("#uqcrowd-analytics").hide();
-    $("#uqcrowd-analytics .toggle").on("click", function(event) {
+    $("#uqcrowd-analytics span").on("click", function(event) {
         $(this).parent().parent().toggleClass("show");
     });
 });
