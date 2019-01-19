@@ -40,7 +40,7 @@
 
         $.getJSON('https://ipinfo.io/json', function(data) {
             send_log("message", "Client Info", {
-                finger_print: new Fingerprint().get(),
+                fingerprint: new Fingerprint().get(),
                 ip_address: data['ip'],
             });
         });
