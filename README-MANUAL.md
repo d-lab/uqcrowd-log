@@ -64,7 +64,6 @@ Export data from elasticsearch
     
     python /opt/uqcrowd-log/export.py filename.jl
 
-
 Import the data into elasticsearch
 
     python /opt/uqcrowd-log/import.py filename.jl

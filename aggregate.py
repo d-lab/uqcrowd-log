@@ -50,9 +50,9 @@ def get_session_info(uri, session_id):
     else:
         result = results["hits"]["hits"][0]["_source"]
         return {
-            "worker_id": result["worker_id"],
-            "hit_id": result["hit_id"],
-            "assignment_id": result["assignment_id"],
+            "worker_id": result.get("worker_id"),
+            "hit_id": result.get("hit_id"),
+            "assignment_id": result.get("assignment_id"),
         }
 
 
@@ -96,15 +96,13 @@ def get_session(uri, session_id):
     if results.get("hits"):
         return {
             "session_id": session_id,
+            "worker_id": session_info.get("worker_id"),
+            "hit_id": session_info.get("hit_id"),
+            "assignment_id": session_info.get("assignment_id"),
             "message_count": results["hits"]["total"],
-            "worker_id": session_info["worker_id"],
-            "hit_id": session_info["hit_id"],
-            "assignment_id": session_info["assignment_id"],
             "start_time": results["aggregations"]["start_time"]["value_as_string"],
             "end_time": results["aggregations"]["end_time"]["value_as_string"],
             "duration": results["aggregations"]["end_time"]["value"] - results["aggregations"]["start_time"]["value"],
-            # Todo:
-            # "final_result": get_final_result(session_id)
         }
     else:
         return None
