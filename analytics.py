@@ -52,30 +52,17 @@ def worker_message_count(worker_id):
         }
     })
 
-    rows = []
-    for item in data["aggregations"]["session"]["buckets"]:
-        row = {
-            "c": [
-                {"v": item["key_as_string"][:10]},
-                {"v": item["doc_count"]},
-                {"v": item["duration"]["value"]},
-                {"v": item["message_count"]["value"]}
-            ]
+    results = [
+        {
+            "datetime": item["key_as_string"][:10],
+            "session_count": item["doc_count"],
+            "message_count": item["message_count"]["value"],
+            "total_duration": item["duration"]["value"],
         }
-        rows.append(row)
-
-    results = {
-        "cols": [
-            {"label": "Date", "type": "date"},
-            {"label": "Session Count", "type": "number"},
-            {"label": "Message Count", "type": "number"},
-            {"label": "Total Duration", "type": "number"}
-        ],
-        "rows": rows
-    }
+        for item in data["aggregations"]["session"]["buckets"]
+    ]
 
     return Response(json.dumps(results), mimetype="application/json")
-
 
 @app.route(api_prefix + "/session/client/<fingerprint>", methods=['GET'])
 def client(fingerprint):

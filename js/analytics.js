@@ -1,20 +1,32 @@
-var message_count
+var jsonData
 $.ajax({
-    url: "http://localhost:6001/analytics/worker/AFQP6LS4IVIMY",
+    url: "https://dke-uqcrowd-log.uqcloud.net/analytics/session/worker/A1GL5AQV7VT91U/session_count",
     type: "GET",
     contentType: "text/plain",
-    success: function(result) {
-        message_count = result
+    success: function(results) {
+        jsonData = results
     }
 })
 
 google.charts.load('current', {packages: ['corechart', 'bar']});
-google.charts.setOnLoadCallback(drawMultSeries);
+google.charts.setOnLoadCallback(drawMultiSeries);
 
-function drawMultSeries() {
-    mydata = [["date","count"]]
-    mydata = mydata.concat(message_count)
-    var data = new google.visualization.DataTable(mydata);
+function drawMultiSeries() {
+    var data = new google.visualization.DataTable();
+
+    data.addColumn('string', 'Date');
+    data.addColumn('number', 'Session Count');
+    data.addColumn('number', 'Message Count');
+    data.addColumn('number', 'Total Duration');
+
+    jsonData.forEach(function (row) {
+        data.addRow([
+            row.datetime,
+            row.session_count,
+            row.message_count,
+            row.total_duration
+        ]);
+    });
 
     var options = {
         title: 'Session Count by Day',
