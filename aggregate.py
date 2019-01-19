@@ -40,6 +40,11 @@ def get_session_info(uri, session_id):
             "match": {
                 "session_id": session_id
             }
+        },
+        "aggs": {
+            "log_type": {
+                "terms": {"field": "log_type.keyword" }
+            }
         }
     }
     response = requests.get(uri, headers={"Content-Type": "application/json"}, data=json.dumps(query))
@@ -68,13 +73,43 @@ def get_session(uri, session_id):
 
     """
     query = {
+        "size": 0,
         "query": {
             "match": {
                 "session_id": session_id
             }
         },
-        "size": 0,
         "aggs": {
+            "ip_address": {
+                "terms": {
+                    "field": "content.details.ip.keyword"
+                }
+            },
+            "finger_print": {
+                "terms": {
+                    "field": "content.details.fingerprint"
+                }
+            },
+            "log_type": {
+                "terms": {
+                    "field": "log_type.keyword"
+                }
+            },
+            "assignment_id": {
+                "terms": {
+                    "field": "assignment_id.keyword"
+                }
+            },
+            "worker_id": {
+                "terms": {
+                    "field": "worker_id.keyword"
+                }
+            },
+            "hit_id": {
+                "terms": {
+                    "field": "hit_id.keyword"
+                }
+            },
             "start_time": {
                 "min": {
                     "field": "browser_time"
@@ -145,7 +180,6 @@ def main(date):
     sessions = get_sessions(base_uri + "/" + log_index_prefix + "-" + date + "/_search")
     if sessions is None:
         return
-
 
     for session_id in sessions:
         session = get_session(base_uri + "/" + log_index_prefix + "-" + date + "/_search", session_id)
