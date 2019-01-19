@@ -2,7 +2,7 @@
     position: fixed;
     width: 480px;
     top: 20px;
-    right: -440px;
+    right: -430px;
     z-index: 9999;
 }
 
@@ -27,4 +27,5 @@
     margin: 5px 10px;
     padding: 3px;
     cursor: pointer;
+    user-select: none;
 }
