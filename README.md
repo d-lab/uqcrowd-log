@@ -39,9 +39,9 @@ In order to inject the default logging configuration, you can simply embed the f
     
     <!-- Analytics Charts Container -->
     <div id="uqcrowd-analytics">
-        <div class="title"><span id="toggle">+</span></div>
+        <div class="title"><span>+</span>Performance Analytics</div>
         <div class="chart">
-            <div id="chart_div"></div>
+            <div id="uqcrowd-chart"></div>
         </div>
     </div>
     

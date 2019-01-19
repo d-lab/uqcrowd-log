@@ -1,14 +1,12 @@
 var jsonData
 
 // Get the worker ID from logger.js
-$("#uqcrowd-analytics").hide();
 $.ajax({
     url: "https://dke-uqcrowd-log.uqcloud.net/analytics/session/worker/" + worker_id + "/session_count",
     type: "GET",
     contentType: "text/plain",
     success: function(results) {
         jsonData = results;
-        $("#uqcrowd-analytics").show();
     }
 })
 
@@ -40,7 +38,7 @@ function drawMultiSeries() {
         chartArea: {left:'10%',top:'15%',width:'85%',height:'60%'},
     };
 
-    var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+    var chart = new google.visualization.ColumnChart(document.getElementById('uqcrowd-chart'));
     chart.draw(data, options);
 }
 

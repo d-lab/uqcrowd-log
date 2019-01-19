@@ -1,4 +1,4 @@
-# uqcrowd-log format
+# UQCrowd Log Message Format
 
 This document is to describe the log format of UQCrowd Logging system
 
@@ -77,19 +77,6 @@ An example of a left-click action message
         }
     }
 
-or double-click 
-
-    "type": "mouse_event",
-    "content": {
-        "mouse_event": "double_click",
-        "details": {
-            "from_x": 100,
-            "from_y": 400,
-            "to_x": 200,
-            "to_y": 300
-        }
-    }
-    
 or selection 
 
     "type": "mouse_event",
