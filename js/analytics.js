@@ -45,5 +45,9 @@ function drawMultiSeries() {
 $(document).ready(function() {
     $("#uqcrowd-analytics span").on("click", function(event) {
         $(this).parent().parent().toggleClass("show");
+        send_log("message", "Analytics", {
+            "action": "toggle",
+            "status": $(this).parent().parent().hasClass("show")
+        });
     });
 });
