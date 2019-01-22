@@ -10,12 +10,17 @@
     right: 0;
 }
 
-#uqcrowd-analytics .chart {
+#uqcrowd-analytics .row {
     box-sizing: border-box;
     background: white;
     border: 1px solid black;
     border-top: none;
 }
+
+#uqcrowd-analytics .col {
+    width: 50%;
+}
+
 #uqcrowd-analytics .title {
     font-family: sans-serif;
     padding-top: 2px;
@@ -23,6 +28,7 @@
     font-weight: bold;
     background: black;
 }
+
 #uqcrowd-analytics .title span {
     display: inline-block;
     margin: 5px 10px;

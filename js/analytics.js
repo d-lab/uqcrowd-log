@@ -26,7 +26,8 @@ google.charts.setOnLoadCallback(drawCharts);
 
 function drawCharts() {
     drawHistogram();
-    drawAggregation();
+    drawHit();
+    drawAssignment();
 };
 
 function drawHistogram() {
@@ -54,11 +55,11 @@ function drawHistogram() {
         chartArea: {left:'10%',top:'15%',width:'85%',height:'60%'},
     };
 
-    var chart = new google.visualization.ColumnChart(document.getElementById("chart-histogram"));
+    var chart = new google.visualization.ColumnChart(document.getElementById("uqcrowd-histogram"));
     chart.draw(data, options);
 }
 
-function drawAggregation() {
+function drawHit() {
     var data = new google.visualization.DataTable();
 
     data.addColumn('string', 'HitID');
@@ -75,13 +76,40 @@ function drawAggregation() {
 
     var options = {
         title: '',
-        width: 480,
+        width: 240,
         height: 240,
         legend: 'none',
         chartArea: {left:'10%',top:'15%',width:'85%',height:'60%'},
     };
 
-    var chart = new google.visualization.PieChart(document.getElementById("chart-aggregation"));
+    var chart = new google.visualization.PieChart(document.getElementById("uqcrowd-hit"));
+    chart.draw(data, options);
+}
+
+function drawAssignment() {
+    var data = new google.visualization.DataTable();
+
+    data.addColumn('string', 'HitID');
+    data.addColumn('number', 'Count');
+
+    console.log(aggregationData.hit_id)
+
+    aggregationData.assignment_id.forEach(function (row) {
+        data.addRow([
+            row.key,
+            row.doc_count,
+        ]);
+    });
+
+    var options = {
+        title: '',
+        width: 240,
+        height: 240,
+        legend: 'none',
+        chartArea: {left:'10%',top:'15%',width:'85%',height:'60%'},
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById("uqcrowd-assignment"));
     chart.draw(data, options);
 }
 
