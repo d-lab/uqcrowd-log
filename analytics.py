@@ -8,6 +8,7 @@ api_prefix = "/analytics"
 base_uri = "http://localhost:9200/uqcrowd-session-*/_search"
 
 
+# Aggregate by worker id
 @app.route(api_prefix + "/session/worker/<worker_id>", methods=['GET'])
 def worker(worker_id):
     data = search({
@@ -21,13 +22,52 @@ def worker(worker_id):
     return Response(json.dumps(results), mimetype="application/json")
 
 
-@app.route(api_prefix + "/session/worker/<worker_id>/session_count", methods=['GET'])
-def worker_message_count(worker_id):
+@app.route(api_prefix + "/session/worker/<worker_id>/histogram", methods=['GET'])
+def worker_histogram(worker_id):
+    return histogram("worker_id", worker_id)
+
+
+@app.route(api_prefix + "/session/worker/<worker_id>/aggregation", methods=['GET'])
+def worker_aggregation(worker_id):
+    return aggregation("worker_id", worker_id)
+
+
+# Aggregate by client fingerprint
+@app.route(api_prefix + "/session/client/<fingerprint>", methods=['GET'])
+def client(fingerprint):
+    data = search({
+        "query": {
+            "match": {
+                "worker_id": fingerprint
+            }
+        }
+    })
+    sessions = [session['_source'] for session in data['hits']['hits']]
+    return Response(json.dumps(sessions), mimetype="application/json")
+
+
+@app.route(api_prefix + "/session/worker/<fingerprint>/histogram", methods=['GET'])
+def client_histogram(fingerprint):
+    return histogram("fingerprint", fingerprint)
+
+
+@app.route(api_prefix + "/session/worker/<fingerprint>/aggregation", methods=['GET'])
+def client_aggregation(fingerprint):
+    return aggregation("fingerprint", fingerprint)
+
+
+# Supporting Methods
+def search(query):
+    response = requests.get(base_uri, headers={"Content-Type": "application/json"}, data=json.dumps(query))
+    return json.loads(response.text)
+
+
+def histogram(criteria, value):
     data = search({
         "size": 0,
         "query": {
             "match": {
-                "worker_id": worker_id
+                criteria: value
             }
         },
         "aggs": {
@@ -64,24 +104,43 @@ def worker_message_count(worker_id):
 
     return Response(json.dumps(results), mimetype="application/json")
 
-@app.route(api_prefix + "/session/client/<fingerprint>", methods=['GET'])
-def client(fingerprint):
+
+def aggregation(criteria, value):
     data = search({
+        "size": 0,
         "query": {
             "match": {
-                "worker_id": fingerprint
+                criteria: value
+            }
+        },
+        "aggs": {
+            "assignment_id": {
+                "terms": {
+                    "field": "assignment_id.keyword"
+                }
+            },
+            "ip_address": {
+                "terms": {
+                    "field": "ip_address.keyword"
+                }
+            },
+            "fingerprint": {
+                "terms": {
+                    "field": "fingerprint"
+                }
             }
         }
     })
-    sessions = [session['_source'] for session in data['hits']['hits']]
-    return Response(json.dumps(sessions), mimetype="application/json")
+
+    results = {}
+    for aggs in ("assignment_id", "ip_address", "fingerprint"):
+        if len(data["aggregations"][aggs]["buckets"]) > 0:
+            results[aggs] = data["aggregations"][aggs]["buckets"]
+
+    return Response(json.dumps(results), mimetype="application/json")
 
 
-def search(query):
-    response = requests.get(base_uri, headers={"Content-Type": "application/json"}, data=json.dumps(query))
-    return json.loads(response.text)
-
-
+# Static Files
 @app.route(api_prefix + "/analytics.js", methods=['GET'])
 def analytics_js():
     return send_file('./js/analytics.js')

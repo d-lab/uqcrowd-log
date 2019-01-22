@@ -2,7 +2,7 @@ var jsonData
 
 // Get the worker ID from logger.js
 $.ajax({
-    url: "https://dke-uqcrowd-log.uqcloud.net/analytics/session/worker/" + worker_id + "/session_count",
+    url: "https://dke-uqcrowd-log.uqcloud.net/analytics/session/worker/" + worker_id + "/histogram",
     type: "GET",
     contentType: "text/plain",
     success: function(results) {

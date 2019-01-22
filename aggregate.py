@@ -91,7 +91,7 @@ def get_session(uri, session_id):
     response = requests.get(uri, headers={"Content-Type": "application/json"}, data=json.dumps(query))
     data = json.loads(response.text)
 
-    result = {
+    results = {
         "session_id": session_id,
         "message_count": data["hits"]["total"],
         "start_time": data["aggregations"]["start_time"]["value_as_string"],
@@ -101,9 +101,9 @@ def get_session(uri, session_id):
 
     for aggs in ("worker_id", "hit_id", "assignment_id", "ip_address", "fingerprint"):
         if len(data["aggregations"][aggs]["buckets"]) > 0:
-            result[aggs] = data["aggregations"][aggs]["buckets"][0]["key"]
+            results[aggs] = data["aggregations"][aggs]["buckets"][0]["key"]
 
-    return result
+    return results
 
 
 def add_session(uri, session):
