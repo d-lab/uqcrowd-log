@@ -114,6 +114,11 @@ def aggregation(criteria, value):
             }
         },
         "aggs": {
+            "hit_id": {
+                "terms": {
+                    "field": "hit_id.keyword"
+                }
+            },
             "assignment_id": {
                 "terms": {
                     "field": "assignment_id.keyword"
@@ -133,7 +138,7 @@ def aggregation(criteria, value):
     })
 
     results = {}
-    for aggs in ("assignment_id", "ip_address", "fingerprint"):
+    for aggs in ("hit_id", "assignment_id", "ip_address", "fingerprint"):
         if len(data["aggregations"][aggs]["buckets"]) > 0:
             results[aggs] = data["aggregations"][aggs]["buckets"]
 

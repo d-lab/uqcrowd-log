@@ -14,6 +14,7 @@
     box-sizing: border-box;
     background: white;
     border: 1px solid black;
+    border-top: none;
 }
 #uqcrowd-analytics .title {
     font-family: sans-serif;
