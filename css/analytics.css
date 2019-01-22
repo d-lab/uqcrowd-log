@@ -1,3 +1,9 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
 #uqcrowd-analytics {
     position: fixed;
     width: 480px;
@@ -18,7 +24,8 @@
 }
 
 #uqcrowd-analytics .col {
-    width: 50%;
+    display: inline-block;
+    width: 235px;
 }
 
 #uqcrowd-analytics .title {

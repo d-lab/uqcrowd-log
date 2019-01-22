@@ -75,11 +75,11 @@ function drawHit() {
     });
 
     var options = {
-        title: '',
-        width: 240,
+        title: 'Session Count by Hit ID',
+        width: 235,
         height: 240,
         legend: 'none',
-        chartArea: {left:'10%',top:'15%',width:'85%',height:'60%'},
+        chartArea: {left:'10%',top:'15%',width:'85%',height:'80%'},
     };
 
     var chart = new google.visualization.PieChart(document.getElementById("uqcrowd-hit"));
@@ -102,11 +102,11 @@ function drawAssignment() {
     });
 
     var options = {
-        title: '',
-        width: 240,
+        title: 'by Assignment ID',
+        width: 235,
         height: 240,
         legend: 'none',
-        chartArea: {left:'10%',top:'15%',width:'85%',height:'60%'},
+        chartArea: {left:'10%',top:'15%',width:'85%',height:'80%'},
     };
 
     var chart = new google.visualization.PieChart(document.getElementById("uqcrowd-assignment"));
