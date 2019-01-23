@@ -1,5 +1,5 @@
 # aggregate sessions every day
-05 0    * * *   root    python /opt/uqcrowd-log/aggregate-session.py $(date '+%F'  --date='1 days ago')
+05 0    * * *   root    python /opt/uqcrowd-log/aggregate.py $(date '+%F'  --date='1 days ago')
 
 # start the logger every hour
 30 *    * * *   root    /opt/uqcrowd-log/logger-start.sh
