@@ -24,7 +24,7 @@ Sample log message:
         "session_id": "ojkjj8pvav",
         "worker_id": <Worker_ID from Mturk>,
         "hit_id": <Hit_ID from MTurk>,
-	"exp_id": "abcde191231",  // (tom) <experiment_ID MANUALLY set by requester>
+        "exp_id": "abcde191231",  // (tom) <experiment_ID MANUALLY set by requester>
         "assessment_id": <Assessment_ID from Mturk>,
         "content": {
             "message": "Start Session"
