@@ -75,7 +75,9 @@ a slack message to channel #system-notification to CrowOnTour Slack Team
     #  "end_time": 1588213632000}
 
 *If experiment_id is provided, both start_time and end_time will be skipped*
+
 *If we want to select by time (not experiment_id), then experiment_id should be set as NULL using double quote (i.e., "")*
+
 *Both start_time and end_time are in milliseconds. If time=1578202632 (in seconds), then add "000" to change it to milliseconds (i.e., time=1578202632000).
 
 (2) run the following script
