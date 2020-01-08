@@ -60,11 +60,11 @@ a slack message to channel #system-notification to CrowOnTour Slack Team
 
 ## Export and Import Data
 
-Export data from elasticsearch
+**1. Export data from elasticsearch**
     
     python /opt/uqcrowd-log/export.py filename.jl
 
-(NEW) Export data from elasticsearch (tom-200109)
+**2. (NEW) Export data from elasticsearch (tom-200109)**
 
 (1) change the parameters
 
@@ -84,6 +84,6 @@ Export data from elasticsearch
 
 *The exported file should be in /opt/uqcrowd-log/exportLogFile*
 
-Import the data into elasticsearch
+**3. Import the data into elasticsearch**
 
     python /opt/uqcrowd-log/import.py filename.jl
