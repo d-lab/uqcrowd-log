@@ -66,7 +66,7 @@ a slack message to channel #system-notification to CrowOnTour Slack Team
 
 **2. (NEW) Export data from elasticsearch (tom-200109)**
 
-Step (1/2) change the parameters (you can Google "vim" or "vi" to see how to use the editor in linux)
+Step (1/2) change the parameters (you can Google "vim" or "vi" to see how to use the editor in linux, such as insert, save, etc.)
 
     sudo vi /opt/uqcrowd-log/exportParameters.json
     
