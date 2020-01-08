@@ -66,7 +66,7 @@ a slack message to channel #system-notification to CrowOnTour Slack Team
 
 **2. (NEW) Export data from elasticsearch (tom-200109)**
 
-(1) change the parameters
+Step (1/2) change the parameters
 
     sudo vi /opt/uqcrowd-log/exportParameters.json
     # {"your_filename": <the file name you want to save>,
@@ -74,15 +74,15 @@ a slack message to channel #system-notification to CrowOnTour Slack Team
     #  "start_time": 1578202000632,
     #  "end_time": 1588213632000}
 
-*If experiment_id is provided, both start_time and end_time will be skipped*
-*If we want to select by time (not experiment_id), then experiment_id should be set as NULL using double quote (i.e., "")*
-*Both start_time and end_time are in milliseconds. If time=1578202632 (in seconds), then add "000" to change it to milliseconds (i.e., time=1578202632000)*
+*1. If experiment_id is provided, both start_time and end_time will be skipped*
+*1. If we want to select by time (not experiment_id), then experiment_id should be set as NULL using double quote (i.e., "")*
+*1. Both start_time and end_time are in milliseconds. If time=1578202632 (in seconds), then add "000" to change it to milliseconds (i.e., time=1578202632000)*
 
-(2) run the following script
+Step (2/2) run the following script
 
     sudo python /opt/uqcrowd-log/tomExport.py
 
-*The exported file should be in /opt/uqcrowd-log/exportLogFile*
+*Then the exported file should be in /opt/uqcrowd-log/exportLogFile*
 
 **3. Import the data into elasticsearch**
 
