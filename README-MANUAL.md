@@ -66,14 +66,23 @@ Export data from elasticsearch
 
 (NEW) Export data from elasticsearch (tom-200109)
 
-    (1) change the parameters
-    sudo vi exportParameters.json
+(1) change the parameters
+
+    sudo vi /opt/uqcrowd-log/exportParameters.json
     # {"your_filename": <the file name you want to save>,
     #  "experiment_id": <experiment ID your want to export>,
     #  "start_time": 1578202000632,
     #  "end_time": 1588213632000}
-    #  
-    python /opt/uqcrowd-log/export.py filename.jl
+
+*If experiment_id is provided, both start_time and end_time will be skipped*
+*If we want to select by time (not experiment_id), then experiment_id should be set as NULL using double quote (i.e., "")*
+*Both start_time and end_time are in milliseconds. If time=1578202632 (in seconds), then add "000" to change it to milliseconds (i.e., time=1578202632000).
+
+(2) run the following script
+
+    sudo python /opt/uqcrowd-log/tomExport.py
+
+*The exported file should be in /opt/uqcrowd-log/exportLogFile*
 
 Import the data into elasticsearch
 
