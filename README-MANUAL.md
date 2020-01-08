@@ -64,6 +64,17 @@ Export data from elasticsearch
     
     python /opt/uqcrowd-log/export.py filename.jl
 
+(NEW) Export data from elasticsearch (tom-200109)
+
+    (1) change the parameters
+    sudo vi exportParameters.json
+    # {"your_filename": <the file name you want to save>,
+    #  "experiment_id": <experiment ID your want to export>,
+    #  "start_time": 1578202000632,
+    #  "end_time": 1588213632000}
+    #  
+    python /opt/uqcrowd-log/export.py filename.jl
+
 Import the data into elasticsearch
 
     python /opt/uqcrowd-log/import.py filename.jl
