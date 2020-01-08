@@ -74,9 +74,9 @@ Step (1/2) change the parameters
     #  "start_time": 1578202000632,
     #  "end_time": 1588213632000}
 
-*1. If experiment_id is provided, both start_time and end_time will be skipped*
-*1. If we want to select by time (not experiment_id), then experiment_id should be set as NULL using double quote (i.e., "")*
-*1. Both start_time and end_time are in milliseconds. If time=1578202632 (in seconds), then add "000" to change it to milliseconds (i.e., time=1578202632000)*
+1. *If experiment_id is provided, both start_time and end_time will be skipped*
+1. *If we want to select by time (not experiment_id), then experiment_id should be set as NULL using double quote (i.e., "")*
+1. *Both start_time and end_time are in milliseconds. If time=1578202632 (in seconds), then add "000" to change it to milliseconds (i.e., time=1578202632000)*
 
 Step (2/2) run the following script
 
