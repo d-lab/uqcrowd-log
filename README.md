@@ -21,7 +21,7 @@ _Note: The SSL certificates is handled by the UQ's Front Proxy._
 
 This document is to describe how to inject javascript to record user actions on a MTurk Hit,
 
-In order to inject the default logging configuration, you can simply embed the following script on top of your MTurk Template:
+In order to inject the default logging configuration, you can simply embed the following script on top of your MTurk Template **(Please change the experiment ID to yours)**:
 
     <!-- BEGIN -->
     
