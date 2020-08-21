@@ -29,6 +29,11 @@ In order to inject the default logging configuration, you can simply embed the f
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     
+    <!-- Set experiment ID -->
+    <script type="text/javascript">
+        exp_id_preDefined = "tom_exp1";  // change to your experiment ID
+    </script>
+    
     <!-- Logging System Script -->
     <script type="text/javascript" src="https://dke-uqcrowd-log.uqcloud.net/logger/fingerprint.js"></script>
     <script type="text/javascript" src="https://dke-uqcrowd-log.uqcloud.net/logger/logger.js"></script>
