@@ -58,6 +58,11 @@ In order to inject the default logging configuration, you can simply embed the f
         </div>
     </div>
     
+    <!-- Obtain Session ID -->
+    <script type="text/javascript">
+        // tom = session_id;  // now you can use Session ID in your code (e.g., send session_id to your server)
+    </script>
+    
     <!-- END  -->
 
 The default logging configuration records following type of log:
